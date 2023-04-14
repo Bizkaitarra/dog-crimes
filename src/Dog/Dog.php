@@ -5,6 +5,12 @@ use App\BoardPlace;
 
 class Dog
 {
+    const DAISY = 'Daisy';
+    const ACE = 'Ace';
+    const CIDER = 'Cider';
+    const SUZETTE = 'Suzette';
+    const BEANS = 'Beans';
+    const PEPPER = 'Pepper';
 
     private ?BoardPlace $boardPlace;
 
@@ -18,6 +24,84 @@ class Dog
         private bool $hasBow
     )
     {
+    }
+
+    public static function makeDaisy(): Dog
+    {
+        return new self(
+            self::DAISY,
+            true,
+            true,
+            false,
+            false,
+            false,
+            false
+        );
+    }
+
+    public static function makeAce(): Dog
+    {
+        return new self(
+            self::ACE,
+            true,
+            false,
+            true,
+            false,
+            false,
+            false
+        );
+    }
+
+    public static function makeCider(): Dog
+    {
+        return new self(
+            self::CIDER,
+            false,
+            false,
+            false,
+            true,
+            true,
+            false
+        );
+    }
+
+    public static function makeSuzette(): Dog
+    {
+        return new self(
+            self::SUZETTE,
+            false,
+            false,
+            false,
+            false,
+            true,
+            true
+        );
+    }
+
+    public static function makeBeans(): Dog
+    {
+        return new self(
+            self::BEANS,
+            false,
+            true,
+            false,
+            false,
+            false,
+            true
+        );
+    }
+
+    public static function makePepper(): Dog
+    {
+        return new self(
+            self::PEPPER,
+            false,
+            false,
+            true,
+            true,
+            false,
+            false
+        );
     }
 
     public function getName(): string
@@ -57,7 +141,7 @@ class Dog
 
     public function isPlaced(): bool
     {
-        return $this->boardPlace instanceof BoardPlace;
+        return isset($this->boardPlace) && $this->boardPlace instanceof BoardPlace;
     }
 
     public function getBoardPlace(): ?BoardPlace
@@ -71,9 +155,7 @@ class Dog
     public function place(BoardPlace $boardPlace): void
     {
         $this->boardPlace = $boardPlace;
-        if ($boardPlace->getDog() !== $this) {
-            $boardPlace->placeDog($this);
-        }
+        $boardPlace->placeDog($this);
     }
 
 }

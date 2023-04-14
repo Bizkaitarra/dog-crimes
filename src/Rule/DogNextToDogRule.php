@@ -18,23 +18,22 @@ class DogNextToDogRule implements Rule
 
 
     /**
-     * @throws \Exception
+     * @throws IncorrectRuleException
      */
     public function meets(Game $game): RuleCompliance
     {
-
         $dogsThatMeetsFirstDefinition = $this->firstDogDefinition->getDogsThatMeets($game->dogs);
         $dogsThatMeetsSecondDefinition = $this->secondDogDefinition->getDogsThatMeets($game->dogs);
 
         if (empty($dogsThatMeetsFirstDefinition) || empty($dogsThatMeetsSecondDefinition)) {
-            throw new \Exception('The rule is not valid for current game, not dogs that meets definitions');
+            throw new IncorrectRuleException($this);
         }
 
-        $placedDogsThatMeetsFirstDogDefinition = array_reduce(
+        $placedDogsThatMeetsFirstDogDefinition = array_filter(
             $dogsThatMeetsFirstDefinition,
             fn (Dog $dog) => $dog->isPlaced()
         );
-        $placedDogsThatMeetsSecondDogDefinition = array_reduce(
+        $placedDogsThatMeetsSecondDogDefinition = array_filter(
             $dogsThatMeetsSecondDefinition,
             fn (Dog $dog) => $dog->isPlaced()
         );
@@ -43,18 +42,16 @@ class DogNextToDogRule implements Rule
             return RuleCompliance::NotMeetNorViolateTheRule;
         }
 
-        if (count($placedDogsThatMeetsFirstDogDefinition) === 1 && count($placedDogsThatMeetsSecondDogDefinition) === 1) {
-            $firstDog = $placedDogsThatMeetsFirstDogDefinition[0];
-            $secondDog = $placedDogsThatMeetsFirstDogDefinition[0];
-        }
-
+        /** @var Dog $dogThatMeetsFirstDogDefinition */
         foreach ($placedDogsThatMeetsFirstDogDefinition as $dogThatMeetsFirstDogDefinition) {
-
+            /** @var Dog $placedDogThatMeetsSecondDogDefinition */
+            foreach ($placedDogsThatMeetsSecondDogDefinition as $placedDogThatMeetsSecondDogDefinition) {
+                if ($dogThatMeetsFirstDogDefinition->getBoardPlace()->isNextTo($placedDogThatMeetsSecondDogDefinition->getBoardPlace())) {
+                    return RuleCompliance::MeetsTheRule;
+                }
+            }
         }
 
-        foreach ($game->board as $boardPlace) {
-            //if ($boardPlace->)
-        }
-        return false;
+        return RuleCompliance::ViolatesTheRule;
     }
 }
