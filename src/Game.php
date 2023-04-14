@@ -15,14 +15,19 @@ class Game
     /** @var Rule[] */
     private array $rules;
 
-    public function __construct(array $rules)
+    public function __construct(array $rules, string $crime)
     {
-        $this->buildBoard();
-        $this->buildDogs();
+        $this->board = $this->buildBoard($crime);
+        $this->dogs = $this->getDogs();
         $this->rules = $rules;
     }
 
-    private function buildBoard()
+    public function place(Dog $dog, int $boardPlaceNumber): void
+    {
+        $this->dogs[$dog->getName()]->place($this->board[$boardPlaceNumber]);
+    }
+
+    private function buildBoard(string $crime): array
     {
         $tennisBall = new Evidence(Evidence::TENNIS_BALL);
         $sock = new Evidence(Evidence::SOCK);
@@ -69,78 +74,29 @@ class Game
         $boardPlace6->addLeftBoard($boardPlace1);
         $boardPlace6->addRightBoard($boardPlace5);
 
-        $this->board = [
-            $boardPlace1,
-            $boardPlace2,
-            $boardPlace3,
-            $boardPlace4,
-            $boardPlace5,
-            $boardPlace6
-        ];
+        $board = [];
+        $board[$boardPlace1->placeNumber] = $boardPlace1;
+        $board[$boardPlace2->placeNumber] = $boardPlace2;
+        $board[$boardPlace3->placeNumber] = $boardPlace3;
+        $board[$boardPlace4->placeNumber] = $boardPlace4;
+        $board[$boardPlace5->placeNumber] = $boardPlace5;
+        $board[$boardPlace6->placeNumber] = $boardPlace6;
+        return $board;
     }
 
-    private function buildDogs()
+    /**
+     * @return Dog[]
+     */
+    private function getDogs(): array
     {
-
-        $this->dogs[] = new Dog(
-            'Daisy',
-            true,
-            true,
-            false,
-            false,
-            false,
-            false
-        );
-
-        $this->dogs[] = new Dog(
-            'Ace',
-            true,
-            false,
-            true,
-            false,
-            false,
-            false
-        );
-
-        $this->dogs[] = new Dog(
-            'Cider',
-            false,
-            false,
-            false,
-            true,
-            true,
-            false
-        );
-
-        $this->dogs[] = new Dog(
-            'Suzette',
-            false,
-            false,
-            false,
-            false,
-            true,
-            true
-        );
-
-        $this->dogs[] = new Dog(
-            'Beans',
-            false,
-            true,
-            false,
-            false,
-            false,
-            true
-        );
-
-        $this->dogs[] = new Dog(
-            'Pepper',
-            false,
-            false,
-            true,
-            true,
-            false,
-            false
-        );
+        $dogs = [];
+        $dogs[Dog::DAISY] = Dog::makeDaisy();
+        $dogs[Dog::ACE] = Dog::makeAce();
+        $dogs[Dog::CIDER] = Dog::makeCider();
+        $dogs[Dog::SUZETTE] = Dog::makeSuzette();
+        $dogs[Dog::BEANS] = Dog::makeBeans();
+        $dogs[Dog::PEPPER] = Dog::makePepper();
+        return $dogs;
     }
 
 

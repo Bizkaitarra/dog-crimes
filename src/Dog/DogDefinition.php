@@ -46,6 +46,6 @@ class DogDefinition
      * @return Dog[]
      */
     public function getDogsThatMeets(array $dogs): array {
-        return array_reduce($dogs, fn($dog) => $this->meets($dog));
+        return array_filter($dogs, fn($dog) => $this->meets($dog));
     }
 }
