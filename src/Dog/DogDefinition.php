@@ -16,7 +16,7 @@ class DogDefinition
     {
     }
 
-    public function meets(Dog $dog) {
+    private function meets(Dog $dog) {
         if ($this->name !== null && $this->name !== $dog->getName()) {
             return false;
         }
