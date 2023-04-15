@@ -10,6 +10,7 @@ class DogNextToDogRule implements Rule
 {
 
     public function __construct(
+        private readonly string $ruleText,
         private readonly DogDefinition $firstDogDefinition,
         private readonly DogDefinition $secondDogDefinition
     )
@@ -53,5 +54,10 @@ class DogNextToDogRule implements Rule
         }
 
         return RuleCompliance::ViolatesTheRule;
+    }
+
+    public function __toString(): string
+    {
+        return $this->ruleText;
     }
 }

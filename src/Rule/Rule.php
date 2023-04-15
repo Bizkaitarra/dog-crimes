@@ -6,6 +6,7 @@ use App\Game;
 
 interface Rule
 {
+    public function __toString(): string;
     /**
      * @throws IncorrectRuleException
      */
