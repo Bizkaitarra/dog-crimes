@@ -2,6 +2,7 @@
 
 namespace App\Rule;
 
+use App\Dog\Dog;
 use App\Dog\DogDefinition;
 use App\Game;
 
@@ -24,7 +25,22 @@ final class DogsWherePlayingOutside implements Rule
      */
     public function meets(Game $game): RuleCompliance
     {
-        throw new IncorrectRuleException($this);
+        foreach ($this->dogDefinitions as $dogDefinition) {
+            $dogsThatMeetsDefinition = $dogDefinition->getDogsThatMeets($game->dogs);
+
+            if (count($dogsThatMeetsDefinition) === 0) {
+                throw new IncorrectRuleException($this);
+            }
+
+            $notPlacedDogsThatMeetsDefinition = array_filter(
+                $dogsThatMeetsDefinition,
+                fn (Dog $dog) => !$dog->isPlaced()
+            );
+            if (count($notPlacedDogsThatMeetsDefinition) === 0) {
+                return RuleCompliance::ViolatesTheRule;
+            }
+        }
+        return RuleCompliance::MeetsTheRule;
     }
 
     public function __toString(): string

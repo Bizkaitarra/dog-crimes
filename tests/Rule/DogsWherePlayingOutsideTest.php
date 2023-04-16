@@ -3,10 +3,12 @@
 namespace App\Tests\Rule;
 
 use App\Crime;
+use App\Dog\Dog;
 use App\Dog\DogDefinition;
 use App\Game;
 use App\Rule\DogsWherePlayingOutside;
 use App\Rule\IncorrectRuleException;
+use App\Rule\RuleCompliance;
 use PHPUnit\Framework\TestCase;
 
 final class DogsWherePlayingOutsideTest extends TestCase
@@ -30,5 +32,119 @@ final class DogsWherePlayingOutsideTest extends TestCase
         ));
         $this->expectException(IncorrectRuleException::class);
         $rule->meets($game);
+    }
+
+
+    /**
+     * @test
+     */
+    public function whenExistingADogThatMeetsAndIsPlacedShouldReturnViolatesTheRule() {
+        $ruleText = 'A dog named Cider was playing outside';
+        $rule = new DogsWherePlayingOutside(
+            $ruleText,
+            [
+                new DogDefinition(
+                    'Cider', null, null, null, null, null, null
+                )
+            ]
+        );
+        $game = new Game([$rule], Crime::CAKE);
+
+        $game->place(Dog::makeCider(), 1);
+        $this->assertEquals(RuleCompliance::ViolatesTheRule, $rule->meets($game));
+    }
+
+
+    /**
+     * @test
+     */
+    public function whenExistingSomeDogsThatMeetsAndAreAllPlacedShouldReturnViolatesTheRule() {
+        $ruleText = 'A dog with bandana was playing outside';
+        $rule = new DogsWherePlayingOutside(
+            $ruleText,
+            [
+                new DogDefinition(
+                    null, true, null, null, null, null, null
+                )
+            ]
+        );
+        $game = new Game([$rule], Crime::CAKE);
+
+        $game->place(Dog::makeAce(), 1);
+        $game->place(Dog::makeDaisy(), 2);
+        $this->assertEquals(RuleCompliance::ViolatesTheRule, $rule->meets($game));
+    }
+
+
+    /**
+     * @test
+     */
+    public function whenExistingSomeDogsThatMeetsAndOneIsNotPlacedShouldReturnViolatesTheRule() {
+        $ruleText = 'A dog with bandana was playing outside';
+        $rule = new DogsWherePlayingOutside(
+            $ruleText,
+            [
+                new DogDefinition(
+                    null, true, null, null, null, null, null
+                )
+            ]
+        );
+        $game = new Game([$rule], Crime::CAKE);
+
+        $game->place(Dog::makeAce(), 1);
+        $this->assertEquals(RuleCompliance::MeetsTheRule, $rule->meets($game));
+    }
+
+
+    /**
+     * @test
+     */
+    public function twoDogsPlayingOutSideButAllDogsThatMeetDefinitionArePlaced() {
+        $ruleText = 'A dog with bandana and a dog with tan tail where playing outside';
+        $rule = new DogsWherePlayingOutside(
+            $ruleText,
+            [
+                new DogDefinition(
+                    null, true, null, null, null, null, null
+                ),
+                new DogDefinition(
+                    null, false, true, null, null, null, null
+                )
+            ]
+        );
+        $game = new Game([$rule], Crime::CAKE);
+
+        $game->place(Dog::makeAce(), 1);
+        $game->place(Dog::makeDaisy(), 2);
+        $game->place(Dog::makeBeans(), 3);
+
+
+        $this->assertEquals(RuleCompliance::ViolatesTheRule, $rule->meets($game));
+    }
+
+
+    /**
+     * @test
+     */
+    public function twoDogsPlayingOutSideButNotAllDogsThatMeetDefinitionArePlaced() {
+        $ruleText = 'A dog with bandana and a dog with tan tail where playing outside';
+        $rule = new DogsWherePlayingOutside(
+            $ruleText,
+            [
+                new DogDefinition(
+                    null, true, null, null, null, null, null
+                ),
+                new DogDefinition(
+                    null, null, true, null, null, null, null
+                )
+            ]
+        );
+        $game = new Game([$rule], Crime::CAKE);
+
+        $game->place(Dog::makeAce(), 1);
+        $game->place(Dog::makeBeans(), 3);
+
+
+        $this->assertEquals(RuleCompliance::MeetsTheRule, $rule->meets($game));
     }
 }
