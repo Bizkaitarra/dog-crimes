@@ -1,8 +1,7 @@
 <?php
 
-namespace Rule;
+namespace App\Tests\Rule;
 
-use App\BoardPlace;
 use App\Crime;
 use App\Dog\Dog;
 use App\Dog\DogDefinition;

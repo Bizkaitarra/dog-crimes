@@ -1,6 +1,6 @@
 <?php
 
-namespace Dog;
+namespace App\Tests\Dog;
 
 use App\Dog\Dog;
 use App\Dog\DogDefinition;
@@ -43,6 +43,25 @@ final class DogDefinitionTest extends TestCase
         );
         $this->assertCount(1, $dogDefinition->getDogsThatMeets(
             [Dog::makeDaisy(), Dog::makeAce(), Dog::makeCider(), Dog::makePepper(), Dog::makeSuzette(), Dog::makeBeans()]
+        ));
+    }
+
+    /**
+     * @test
+     */
+    public function daisyShouldNotMeetWithIncorrectName()
+    {
+        $dogDefinition = new DogDefinition(
+            'Incorrect name',
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+        $this->assertCount(0, $dogDefinition->getDogsThatMeets(
+            [Dog::makeDaisy()]
         ));
     }
 }
