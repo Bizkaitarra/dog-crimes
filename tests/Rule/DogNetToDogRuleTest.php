@@ -36,6 +36,30 @@ final class DogNetToDogRuleTest extends TestCase
         $this->expectException(IncorrectRuleException::class);
         $rule->meets($game);
     }
+    /**
+     * @test
+     */
+    public function ruleThatCantBeNeverMeetNotMeetsTheSecondDefinitionShouldReturnException() {
+        $ruleText = 'A dog named NotExistingDog is next to and other dog';
+        $rule = new DogNextToDogRule(
+            $ruleText,
+            new DogDefinition(
+               null , null, null, null,null, null, null
+            ),
+            new DogDefinition(
+                'NotExistingDog', null, null, null,null, null, null
+            )
+        );
+
+        $game = new Game([$rule], Crime::CAKE);
+
+        $this->expectExceptionMessage(sprintf(
+            'The rule %s is not valid for current game, not dogs that meets definitions',
+            $ruleText
+        ));
+        $this->expectException(IncorrectRuleException::class);
+        $rule->meets($game);
+    }
 
     /**
      * @test
@@ -62,10 +86,10 @@ final class DogNetToDogRuleTest extends TestCase
         $rule = new DogNextToDogRule(
             'A dog is next other dog',
             new DogDefinition(
-                null, null, null, null,null, null, null
+                Dog::CIDER, null, null, null,null, null, null
             ),
             new DogDefinition(
-                null, null, null, null,null, null, null
+                Dog::DAISY, null, null, null,null, null, null
             )
         );
         $game = new Game([$rule], Crime::CAKE);
