@@ -29,10 +29,10 @@ class DogDefinition
         if ($this->hasPerkyEars !== null && $this->hasPerkyEars !== $dog->hasPerkyEars()) {
             return false;
         }
-        if ($this->hasWhitePaws !== null && $this->hasBandana !== $dog->hasWhitePaws()) {
+        if ($this->hasWhitePaws !== null && $this->hasWhitePaws !== $dog->hasWhitePaws()) {
             return false;
         }
-        if ($this->hasCollar !== null && $this->hasBandana !== $dog->hasCollar()) {
+        if ($this->hasCollar !== null && $this->hasCollar !== $dog->hasCollar()) {
             return false;
         }
         if ($this->hasBow !== null && $this->hasBow !== $dog->hasBow()) {

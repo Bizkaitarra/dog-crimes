@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Dog\Dog;
+use App\Rule\Rule;
 
 class Game
 {
@@ -97,6 +98,10 @@ class Game
         $dogs[Dog::BEANS] = Dog::makeBeans();
         $dogs[Dog::PEPPER] = Dog::makePepper();
         return $dogs;
+    }
+
+    public function getDogByName(string $dogName):Dog {
+        return $this->dogs[$dogName];
     }
 
 

@@ -39,10 +39,6 @@ class DogNextToDogRule implements Rule
             fn (Dog $dog) => $dog->isPlaced()
         );
 
-        if (empty($placedDogsThatMeetsFirstDogDefinition) || empty($placedDogsThatMeetsSecondDogDefinition)) {
-            return RuleCompliance::NotMeetNorViolateTheRule;
-        }
-
         /** @var Dog $dogThatMeetsFirstDogDefinition */
         foreach ($placedDogsThatMeetsFirstDogDefinition as $dogThatMeetsFirstDogDefinition) {
             /** @var Dog $placedDogThatMeetsSecondDogDefinition */
@@ -51,6 +47,13 @@ class DogNextToDogRule implements Rule
                     return RuleCompliance::MeetsTheRule;
                 }
             }
+        }
+
+        if (
+            count($dogsThatMeetsFirstDefinition) > count($placedDogsThatMeetsFirstDogDefinition) ||
+            count($dogsThatMeetsSecondDefinition) > count($placedDogsThatMeetsSecondDogDefinition)
+        ) {
+            return RuleCompliance::NotMeetNorViolateTheRule;
         }
 
         return RuleCompliance::ViolatesTheRule;
