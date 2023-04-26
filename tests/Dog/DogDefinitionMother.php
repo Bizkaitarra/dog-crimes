@@ -5,7 +5,6 @@ namespace App\Tests\Dog;
 use App\Dog\Dog;
 use App\Dog\DogDefinition;
 use App\Game;
-use PHPUnit\Framework\TestCase;
 
 final class DogDefinitionMother
 {
