@@ -52,6 +52,14 @@ class BoardPlace
         return $this->frontBoard->placeNumber === $boardPlace->placeNumber;
     }
 
+    public function isInRightOf(BoardPlace $boardPlace): bool {
+        return $this->rightBoard->placeNumber === $boardPlace->placeNumber;
+    }
+
+    public function isInLeftOf(BoardPlace $boardPlace): bool {
+        return $this->leftBoard->placeNumber === $boardPlace->placeNumber;
+    }
+
     public function getDog(): ?Dog
     {
         return $this->dog;
