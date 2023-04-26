@@ -1,5 +1,5 @@
 <?php
-namespace App\Dog;
+namespace App\Domain\Dog;
 
 
 class DogDefinition

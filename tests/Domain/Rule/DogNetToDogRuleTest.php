@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Tests\Rule;
+namespace App\Tests\Domain\Rule;
 
-use App\Crime;
-use App\Dog\Dog;
-use App\Game;
-use App\Rule\DogNextToDogRule;
-use App\Rule\IncorrectRuleException;
-use App\Rule\RuleCompliance;
-use App\Tests\Dog\DogDefinitionMother;
+use App\Domain\Crime;
+use App\Domain\Dog\Dog;
+use App\Domain\Game;
+use App\Domain\Rule\DogNextToDogRule;
+use App\Domain\Rule\IncorrectRuleException;
+use App\Domain\Rule\RuleCompliance;
+use App\Tests\Domain\Dog\DogDefinitionMother;
 use PHPUnit\Framework\TestCase;
 
 final class DogNetToDogRuleTest extends TestCase

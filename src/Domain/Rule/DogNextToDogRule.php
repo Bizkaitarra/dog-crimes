@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Rule;
+namespace App\Domain\Rule;
 
-use App\Dog\Dog;
-use App\Dog\DogDefinition;
+use App\Domain\Dog\Dog;
+use App\Domain\Dog\DogDefinition;
 
 class DogNextToDogRule extends TwoDogPlaced
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Dog;
+namespace App\Tests\Domain\Dog;
 
-use App\Dog\Dog;
-use App\Dog\DogDefinition;
+use App\Domain\Dog\Dog;
+use App\Domain\Dog\DogDefinition;
 use PHPUnit\Framework\TestCase;
 
 final class DogDefinitionTest extends TestCase

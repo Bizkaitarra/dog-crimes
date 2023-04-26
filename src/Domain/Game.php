@@ -1,9 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Domain;
 
-use App\Dog\Dog;
-use App\Rule\Rule;
+use App\Domain\Dog\Dog;
+use App\Domain\Rule\Rule;
 
 class Game
 {

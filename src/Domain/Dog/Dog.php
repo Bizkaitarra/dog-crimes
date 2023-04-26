@@ -1,7 +1,7 @@
 <?php
-namespace App\Dog;
+namespace App\Domain\Dog;
 
-use App\BoardPlace;
+use App\Domain\BoardPlace;
 
 class Dog
 {

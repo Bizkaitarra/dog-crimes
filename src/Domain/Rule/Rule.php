@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Rule;
+namespace App\Domain\Rule;
 
-use App\Game;
+use App\Domain\Game;
 
 interface Rule
 {

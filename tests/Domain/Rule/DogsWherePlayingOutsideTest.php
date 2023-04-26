@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Tests\Rule;
+namespace App\Tests\Domain\Rule;
 
-use App\Crime;
-use App\Dog\Dog;
-use App\Dog\DogDefinition;
-use App\Game;
-use App\Rule\DogsWherePlayingOutside;
-use App\Rule\IncorrectRuleException;
-use App\Rule\RuleCompliance;
+use App\Domain\Crime;
+use App\Domain\Dog\Dog;
+use App\Domain\Dog\DogDefinition;
+use App\Domain\Game;
+use App\Domain\Rule\DogsWherePlayingOutside;
+use App\Domain\Rule\IncorrectRuleException;
+use App\Domain\Rule\RuleCompliance;
 use PHPUnit\Framework\TestCase;
 
 final class DogsWherePlayingOutsideTest extends TestCase

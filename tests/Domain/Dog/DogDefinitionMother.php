@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tests\Dog;
+namespace App\Tests\Domain\Dog;
 
-use App\Dog\Dog;
-use App\Dog\DogDefinition;
-use App\Game;
+use App\Domain\Dog\Dog;
+use App\Domain\Dog\DogDefinition;
+use App\Domain\Game;
 
 final class DogDefinitionMother
 {

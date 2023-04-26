@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Rule;
+namespace App\Domain\Rule;
 
 final class IncorrectRuleException extends \Exception
 {

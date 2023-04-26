@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Rule;
+namespace App\Domain\Rule;
 
-use App\Dog\Dog;
-use App\Dog\DogDefinition;
-use App\Game;
+use App\Domain\Dog\Dog;
+use App\Domain\Dog\DogDefinition;
+use App\Domain\Game;
 
 abstract class TwoDogPlaced implements Rule
 {
