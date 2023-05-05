@@ -4,7 +4,7 @@ namespace App\Tests\Domain\Rule;
 
 use App\Domain\Crime;
 use App\Domain\Dog\Dog;
-use App\Domain\Game;
+use App\Domain\Game\Game;
 use App\Domain\Rule\DogNextToDogRule;
 use App\Domain\Rule\IncorrectRuleException;
 use App\Domain\Rule\RuleCompliance;

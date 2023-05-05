@@ -158,4 +158,10 @@ class Dog
         $boardPlace->placeDog($this);
     }
 
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
+
 }

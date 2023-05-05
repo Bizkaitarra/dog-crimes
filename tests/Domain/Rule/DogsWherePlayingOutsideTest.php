@@ -5,7 +5,7 @@ namespace App\Tests\Domain\Rule;
 use App\Domain\Crime;
 use App\Domain\Dog\Dog;
 use App\Domain\Dog\DogDefinition;
-use App\Domain\Game;
+use App\Domain\Game\Game;
 use App\Domain\Rule\DogsWherePlayingOutside;
 use App\Domain\Rule\IncorrectRuleException;
 use App\Domain\Rule\RuleCompliance;

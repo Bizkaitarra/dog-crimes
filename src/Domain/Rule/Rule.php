@@ -2,7 +2,7 @@
 
 namespace App\Domain\Rule;
 
-use App\Domain\Game;
+use App\Domain\Game\Game;
 
 interface Rule
 {

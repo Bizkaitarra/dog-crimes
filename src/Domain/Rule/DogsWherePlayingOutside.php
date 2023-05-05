@@ -4,7 +4,7 @@ namespace App\Domain\Rule;
 
 use App\Domain\Dog\Dog;
 use App\Domain\Dog\DogDefinition;
-use App\Domain\Game;
+use App\Domain\Game\Game;
 
 final class DogsWherePlayingOutside implements Rule
 {

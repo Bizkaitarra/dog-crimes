@@ -4,7 +4,7 @@ namespace App\Domain\Rule;
 
 use App\Domain\Dog\Dog;
 use App\Domain\Dog\DogDefinition;
-use App\Domain\Game;
+use App\Domain\Game\Game;
 
 abstract class TwoDogPlaced implements Rule
 {
@@ -33,7 +33,7 @@ abstract class TwoDogPlaced implements Rule
         foreach ($placedDogsThatMeetsFirstDogDefinition as $dogThatMeetsFirstDogDefinition) {
             /** @var Dog $placedDogThatMeetsSecondDogDefinition */
             foreach ($placedDogsThatMeetsSecondDogDefinition as $placedDogThatMeetsSecondDogDefinition) {
-                if ($dogThatMeetsFirstDogDefinition->getBoardPlace()->isNextTo($placedDogThatMeetsSecondDogDefinition->getBoardPlace())) {
+                if ($this->placed($dogThatMeetsFirstDogDefinition, $placedDogThatMeetsSecondDogDefinition)) {
                     return RuleCompliance::MeetsTheRule;
                 }
             }

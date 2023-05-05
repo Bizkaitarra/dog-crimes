@@ -1,9 +1,14 @@
 <?php
 
-namespace App\Domain;
+namespace App\Domain\Game;
 
+use App\Domain\BoardPlace;
+use App\Domain\Crime;
 use App\Domain\Dog\Dog;
+use App\Domain\Evidence;
+use App\Domain\Rule\IncorrectRuleException;
 use App\Domain\Rule\Rule;
+use App\Domain\Rule\RuleCompliance;
 
 class Game
 {
@@ -15,12 +20,14 @@ class Game
 
     /** @var Rule[] */
     private array $rules;
+    private string $crime;
 
     public function __construct(array $rules, string $crime)
     {
         $this->board = $this->buildBoard($crime);
         $this->dogs = $this->getDogs();
         $this->rules = $rules;
+        $this->crime = $crime;
     }
 
     public function place(Dog $dog, int $boardPlaceNumber): void
@@ -102,6 +109,70 @@ class Game
 
     public function getDogByName(string $dogName):Dog {
         return $this->dogs[$dogName];
+    }
+
+    /**
+     * @return RuleCompliance[]
+     * @throws IncorrectRuleException
+     */
+    public function rules(): array
+    {
+        $text = [];
+        foreach ($this->rules as $rule) {
+            $text[$rule->__toString()] = $rule->meets($this);
+        }
+        return $text;
+    }
+
+    /**
+     * @return Dog[]
+     */
+    public function placedDogs(): array
+    {
+        $text = [];
+        foreach ($this->dogs as $dog) {
+            if ($dog->isPlaced()) {
+                $text[] = $dog;
+            }
+        }
+        return $text;
+    }
+
+    /**
+     * @return Dog[]
+     */
+    public function unPlacedDogs(): array
+    {
+        $text = [];
+        foreach ($this->dogs as $dog) {
+            if (!$dog->isPlaced()) {
+                $text[] = $dog;
+            }
+        }
+        return $text;
+    }
+
+    public function isSolved(): bool
+    {
+        foreach ($this->rules as $rule) {
+            if ($rule->meets($this) !== RuleCompliance::MeetsTheRule) {
+                return false;
+            }
+        }
+        return $this->dogThatMadeTheCrime() instanceof Dog;
+    }
+
+    public function dogThatMadeTheCrime(): ?Dog {
+        foreach ($this->board as $boardPlace) {
+            if ($boardPlace->isCurrentCrimePlace() && $boardPlace->getDog() instanceof Dog) {
+                return $boardPlace->getDog();
+            }
+        }
+        return null;
+    }
+
+    public function crime(): string {
+        return $this->crime;
     }
 
 

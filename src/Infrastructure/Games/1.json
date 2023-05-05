@@ -1,0 +1,25 @@
+{
+  "rules": [
+    {
+      "text": "Ace está sentado enfrente de Beans",
+      "type": "DogAcrossToDogRule",
+      "firstDogDefinition": {
+        "name": "Ace"
+      },
+      "secondDogDefinition": {
+        "name": "Beans"
+      }
+    },
+    {
+      "text": "Daisy estaba sentada a la derecha de Ace",
+      "type": "DogRightToDogRule",
+      "firstDogDefinition": {
+        "name": "Daisy"
+      },
+      "secondDogDefinition": {
+        "name": "Ace"
+      }
+    }
+  ],
+  "crime": "Pillow"
+}

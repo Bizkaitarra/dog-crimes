@@ -72,5 +72,10 @@ class BoardPlace
         }
     }
 
+    public function __toString(): string
+    {
+        return $this->placeNumber;
+    }
+
 
 }
