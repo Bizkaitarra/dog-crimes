@@ -162,6 +162,18 @@ class Game
         return $this->dogThatMadeTheCrime() instanceof Dog;
     }
 
+    public function status(): GameStatus
+    {
+        $gameStatus = new GameStatus(
+            $this->isSolved(),
+            $this->dogThatMadeTheCrime()
+        );
+        foreach ($this->rules as $rule) {
+            $gameStatus->addRule($rule, $rule->meets($this));
+        }
+        return $gameStatus;
+    }
+
     public function dogThatMadeTheCrime(): ?Dog {
         foreach ($this->board as $boardPlace) {
             if ($boardPlace->isCurrentCrimePlace() && $boardPlace->getDog() instanceof Dog) {

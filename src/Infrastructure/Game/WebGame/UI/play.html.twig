@@ -1,0 +1,182 @@
+{% extends 'base.html.twig' %}
+{% block css %}
+    {{ parent() }}
+    <style>
+        .tablero {
+            height: 500px;
+            background-image: url('{{ asset('images/table.png') }}');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+
+        #first_place {
+            min-height: 100px;
+            height: 100%;
+            border: 2px dashed #000;
+            border-radius: 0/0;
+        }
+
+        .place {
+            height: 150px;
+            border-radius: 25%/30%;
+            background-color: rgba(204, 204, 204, 0.5);
+            border: 2px dashed #000;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .vacia {
+            background-color: white;
+        }
+
+        .dogs {
+            margin-left: 10px;
+        }
+
+        .dog {
+            margin-top: 20px;
+            width: 20px;
+            height: 120px;
+        }
+
+        .place .dog {
+            margin-top: 0;
+            margin-left: -100px;
+        }
+
+        .dog img {
+            border-radius: 50%/15%;
+            height: 100%;
+        }
+
+
+        .second-row {
+            margin-top: 200px !important;
+        }
+
+        .dragging {
+            cursor: move;
+        }
+
+        .over {
+            background-color: rgba(204, 204, 204, 1);
+
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script>
+        const dogs = document.querySelectorAll('.dog');
+        const places = document.querySelectorAll('.place');
+
+        dogs.forEach(dog => {
+            dog.addEventListener('dragstart', dragStart);
+            dog.addEventListener('dragend', dragEnd);
+        });
+
+        places.forEach(place => {
+            place.addEventListener('dragover', dragOver);
+            place.addEventListener('dragenter', dragEnter);
+            place.addEventListener('dragleave', dragLeave);
+            place.addEventListener('drop', drop);
+        });
+
+        let draggedDog = null;
+
+        function dragStart() {
+            draggedDog = this;
+            this.classList.add('dragging');
+        }
+
+        function dragEnd() {
+            draggedDog = null;
+            this.classList.remove('dragging');
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+        }
+
+        function dragEnter(e) {
+            e.preventDefault();
+            this.classList.add('over');
+        }
+
+        function dragLeave() {
+            this.classList.remove('over');
+        }
+
+        function drop() {
+            this.classList.remove('over');
+            this.appendChild(draggedDog);
+        }
+
+    </script>
+{% endblock %}
+
+{% block content %}
+    <form>
+        <input type="hidden" name="ace" value="">
+    </form>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div id="first_place" class="dogs place">
+                <div data-dog="ace" class="dog" draggable="true"><img src="{{ asset('images/ace.png') }}" alt="ace"/></div>
+                <div data-dog="beans" class="dog" draggable="true"><img src="{{ asset('images/beans.png') }}" alt="beans"/></div>
+                <div data-dog="cider" class="dog" draggable="true"><img src="{{ asset('images/cider.png') }}" alt="cider"/></div>
+                <div data-dog="daisy" class="dog" draggable="true"><img src="{{ asset('images/daisy.png') }}" alt="daisy"/></div>
+                <div data-dog="pepper" class="dog" draggable="true"><img src="{{ asset('images/pepper.png') }}" alt="pepper"/></div>
+                <div data-dog="suzette" class="dog" draggable="true"><img src="{{ asset('images/suzette.png') }}" alt="suzette"/></div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-1 place"></div>
+                <div class="col-2"></div>
+                <div class="col-1 place"></div>
+                <div class="col-4"></div>
+            </div>
+            <div class="tablero row">
+                <div class="col-12">
+                    <div class="row second-row">
+                        <div class="col-2">
+                            <ul>
+                                <li>Ace estaba triste y ojeroso</li>
+                                <li>Ace estaba triste y ojeroso</li>
+                                <li>Ace estaba triste y ojeroso</li>
+                                <li>Ace estaba triste y ojeroso</li>
+                            </ul>
+                        </div>
+                        <div class="col-1 place"></div>
+                        <div class="col-6"></div>
+                        <div class="col-1 place"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-1 place"></div>
+                <div class="col-2"></div>
+                <div class="col-1 place"></div>
+                <div class="col-4"></div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+
+
+{% endblock %}
