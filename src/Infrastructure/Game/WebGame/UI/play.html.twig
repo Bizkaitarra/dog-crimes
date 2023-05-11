@@ -67,6 +67,18 @@
 
         }
 
+        .MeetsTheRule {
+            color: #4f805d;
+        }
+
+        .ViolatesTheRule {
+            color: #AA3333;
+        }
+
+        .NotMeetNorViolateTheRule {
+            color: chocolate;
+        }
+
 
     </style>
 {% endblock %}
@@ -99,6 +111,14 @@
         function dragEnd() {
             draggedDog = null;
             this.classList.remove('dragging');
+            const hiddenInput = document.querySelector('input[type="hidden"][name="' + this.dataset.dog + '"]');
+            const parentId = this.parentNode.id;
+            let placeNumber = parentId.split('_')[1];
+            if (!isNaN(placeNumber)) {
+                hiddenInput.value = placeNumber;
+            } else {
+                hiddenInput.value = '';
+            }
         }
 
         function dragOver(e) {
@@ -119,12 +139,45 @@
             this.appendChild(draggedDog);
         }
 
+        document.getElementById('send-data').addEventListener('click', function() {
+            var formData = new FormData(document.getElementById('placed_dogs_form'));
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:1000/api/game/check/1');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const result = JSON.parse(xhr.responseText);
+                    let rules = result.gameStatus.rules;
+                    let ul = document.getElementById('rules');
+                    ul.innerHTML = '';
+                    for (var rule in rules) {
+                        let li = document.createElement('li');
+                        li.classList.add(rules[rule].compliance);
+                        li.innerHTML = rules[rule].text;
+                        ul.appendChild(li);
+                    }
+                } else {
+                }
+            };
+            xhr.send(JSON.stringify(Object.fromEntries(formData.entries())));
+        });
+
     </script>
 {% endblock %}
 
 {% block content %}
-    <form>
+    <button id="send-data">Comprobar</button>
+    <div id="midiv"></div>
+
+    <form id="placed_dogs_form">
         <input type="hidden" name="ace" value="">
+        <input type="hidden" name="beans" value="">
+        <input type="hidden" name="cider" value="">
+        <input type="hidden" name="daisy" value="">
+        <input type="hidden" name="pepper" value="">
+        <input type="hidden" name="suzette" value="">
     </form>
     <div class="row">
         <div class="col-1"></div>
@@ -140,38 +193,38 @@
         </div>
         <div class="col-1"></div>
     </div>
+
     <div class="row">
         <div class="col-1"></div>
         <div class="col-10">
             <div class="row">
                 <div class="col-4"></div>
-                <div class="col-1 place"></div>
+                <div id="place_5" class="col-1 place">5</div>
                 <div class="col-2"></div>
-                <div class="col-1 place"></div>
+                <div id="place_6" class="col-1 place">6</div>
                 <div class="col-4"></div>
             </div>
             <div class="tablero row">
                 <div class="col-12">
                     <div class="row second-row">
                         <div class="col-2">
-                            <ul>
-                                <li>Ace estaba triste y ojeroso</li>
-                                <li>Ace estaba triste y ojeroso</li>
-                                <li>Ace estaba triste y ojeroso</li>
-                                <li>Ace estaba triste y ojeroso</li>
+                            <ul id="rules">
+                                {% for ruleStatus in gameStatus.rules %}
+                                    <li>{{ ruleStatus.rule }}</li>
+                                {% endfor %}
                             </ul>
                         </div>
-                        <div class="col-1 place"></div>
+                        <div id="place_4" class="col-1 place">4</div>
                         <div class="col-6"></div>
-                        <div class="col-1 place"></div>
+                        <div id="place_1" class="col-1 place">1</div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-4"></div>
-                <div class="col-1 place"></div>
+                <div id="place_3" class="col-1 place">3</div>
                 <div class="col-2"></div>
-                <div class="col-1 place"></div>
+                <div id="place_2" class="col-1 place">2</div>
                 <div class="col-4"></div>
             </div>
         </div>

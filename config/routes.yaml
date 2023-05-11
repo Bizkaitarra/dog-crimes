@@ -1,3 +1,7 @@
 webgame:
   resource: '../src/Infrastructure/Game/WebGame/config/routes'
   type:     directory
+
+apigame:
+  resource: '../src/Infrastructure/Game/Api/config/routes'
+  type:     directory

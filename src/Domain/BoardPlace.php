@@ -62,7 +62,11 @@ class BoardPlace
 
     public function getDog(): ?Dog
     {
-        return $this->dog;
+        if (isset($this->dog)) {
+            return $this->dog;
+        }
+
+        return null;
     }
 
     public function placeDog(Dog $dog) {

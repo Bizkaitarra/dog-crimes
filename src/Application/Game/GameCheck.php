@@ -3,8 +3,8 @@
 namespace App\Application\Game;
 
 use App\Domain\Dog\Dog;
+use App\Domain\Game\Game;
 use App\Domain\Game\GameRepository;
-use App\Domain\Game\GameStatus;
 
 final class GameCheck
 {
@@ -16,7 +16,7 @@ final class GameCheck
 
     public function __invoke(
         GameCheckRequest $gameCheckRequest
-    ): GameStatus
+    ): Game
     {
         $game = $this->gameRepository->findGame($gameCheckRequest->gameId);
         if ($gameCheckRequest->ace !== null) {
@@ -37,7 +37,7 @@ final class GameCheck
         if ($gameCheckRequest->suzette !== null) {
             $game->place($game->getDogByName(Dog::SUZETTE), $gameCheckRequest->suzette);
         }
-        return $game->status();
+        return $game;
     }
 
 }

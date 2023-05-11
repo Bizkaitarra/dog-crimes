@@ -37,7 +37,7 @@ final class JSONGameRepository implements GameRepository
      */
     public function findGame(GameId $gameId): Game
     {
-        $filename = $this->jsonFolder . $gameId->id . 'json';
+        $filename = $this->jsonFolder . $gameId->id . '.json';
 
         if (!file_exists($filename)) {
             throw new NotExistingGameException($gameId);

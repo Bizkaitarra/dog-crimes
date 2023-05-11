@@ -1,0 +1,11 @@
+POST http://localhost:1000//api/game/check/1
+Content-Type: application/json
+
+{
+  "ace": 1,
+  "beans": 2,
+  "cider": 3,
+  "daisy": 4,
+  "pepper": 5,
+  "suzette": 6
+}

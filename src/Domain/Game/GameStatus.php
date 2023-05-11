@@ -9,7 +9,10 @@ use App\Domain\Rule\RuleStatus;
 
 final class GameStatus
 {
-    public array $rules = [];
+    /**
+     * @var RuleStatus[]
+     */
+    private array $rules = [];
     public function __construct(
         public readonly bool $isSolved,
         public readonly ?Dog $dogThatMadeTheCrime,
@@ -21,4 +24,8 @@ final class GameStatus
         $this->rules[] = new RuleStatus($rule, $ruleCompliance);
     }
 
+    public function rules(): array
+    {
+        return $this->rules;
+    }
 }

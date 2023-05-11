@@ -1,0 +1,4 @@
+api_game_check:
+  methods: [POST]
+  path: /api/game/check/{gameId}
+  controller: App\Infrastructure\Game\Api\GameCheckController

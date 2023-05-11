@@ -7,5 +7,4 @@ enum RuleCompliance
     case MeetsTheRule;
     case ViolatesTheRule;
     case NotMeetNorViolateTheRule;
-
 }
