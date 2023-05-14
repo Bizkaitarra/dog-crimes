@@ -35,6 +35,21 @@ class BoardPlace
         $this->frontBoard = $boardPlace;
     }
 
+    public function leftBoard(): BoardPlace
+    {
+        return $this->leftBoard;
+    }
+
+    public function rightBoard(): BoardPlace
+    {
+        return $this->rightBoard;
+    }
+
+    public function frontBoard(): BoardPlace
+    {
+        return $this->frontBoard;
+    }
+
     public function hasEvidence(Evidence $evidence): bool {
         return isset($this->evidences[$evidence->name]);
     }

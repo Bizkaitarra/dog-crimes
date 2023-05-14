@@ -26,6 +26,12 @@ class DogNextToDogRule extends TwoDogPlaced
         return $firstDog->getBoardPlace()->isNextTo($secondDog->getBoardPlace());
     }
 
+    protected function placedDog(Dog $dog): ?Dog
+    {
+        //TODO: This rule could not be in the same place as others TwoDogPlaced because two places are included
+        return null;
+    }
+
     protected function firstDogDefinition(): DogDefinition
     {
         return $this->firstDogDefinition;

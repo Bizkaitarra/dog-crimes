@@ -26,6 +26,12 @@ class DogAcrossToDogRule extends TwoDogPlaced
         return $firstDog->getBoardPlace()->isInFrontOf($secondDog->getBoardPlace());
     }
 
+    protected function placedDog(Dog $dog): ?Dog
+    {
+        return $dog->getBoardPlace()->frontBoard()->getDog();
+    }
+
+
     protected function firstDogDefinition(): DogDefinition
     {
         return $this->firstDogDefinition;
