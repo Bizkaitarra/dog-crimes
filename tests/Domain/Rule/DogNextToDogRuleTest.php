@@ -11,7 +11,7 @@ use App\Domain\Rule\RuleCompliance;
 use App\Tests\Domain\Dog\DogDefinitionMother;
 use PHPUnit\Framework\TestCase;
 
-final class DogNetToDogRuleTest extends TestCase
+final class DogNextToDogRuleTest extends TestCase
 {
     /**
      * @test
@@ -79,12 +79,12 @@ final class DogNetToDogRuleTest extends TestCase
      * @testdox Cider/Daisy is next to Beans/Ace when Cider and beans are placed and not next to
      */
     public function twoPlacedDogsAreNotNextButOthersCouldMeetTheRule() {
-        $firstDogDefinition = DogDefinitionMother::definitionForTwoDog(Dog::makeCider(), Dog::makeDaisy());
-        $secondDogDefinition = DogDefinitionMother::definitionForTwoDog(Dog::makeBeans(), Dog::makeAce());
-
         $game = new Game([], Crime::CAKE);
         $game->place(Dog::makeCider(), 1);
         $game->place(Dog::makeBeans(), 3);
+
+        $firstDogDefinition = DogDefinitionMother::definitionForTwoDog(Dog::makeCider(), Dog::makeDaisy(), $game);
+        $secondDogDefinition = DogDefinitionMother::definitionForTwoDog(Dog::makeBeans(), Dog::makeAce(), $game);
 
         $rule = new DogNextToDogRule(
             'Cider is next to Daisy',
@@ -174,7 +174,8 @@ final class DogNetToDogRuleTest extends TestCase
 
         $firstDogDefinition = DogDefinitionMother::definitionForTwoDog(
             $game->getDogByName(Dog::CIDER),
-            $game->getDogByName(Dog::PEPPER)
+            $game->getDogByName(Dog::PEPPER),
+            $game
         );
         $secondDogDefinition = DogDefinitionMother::specificDogDefinition(Dog::makeDaisy());
 
@@ -203,11 +204,13 @@ final class DogNetToDogRuleTest extends TestCase
 
         $firstDogDefinition = DogDefinitionMother::definitionForTwoDog(
             $game->getDogByName(Dog::CIDER),
-            $game->getDogByName(Dog::PEPPER)
+            $game->getDogByName(Dog::PEPPER),
+            $game
         );
         $secondDogDefinition = DogDefinitionMother::definitionForTwoDog(
             $game->getDogByName(Dog::DAISY),
-            $game->getDogByName(Dog::ACE)
+            $game->getDogByName(Dog::ACE),
+            $game
         );
 
         $game->place(Dog::makeCider(), 1);

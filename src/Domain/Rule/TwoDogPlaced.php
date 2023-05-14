@@ -13,8 +13,10 @@ abstract class TwoDogPlaced implements Rule
      */
     public function meets(Game $game): RuleCompliance
     {
-        $dogsThatMeetsFirstDefinition = $this->firstDogDefinition()->getDogsThatMeets($game->dogs);
-        $dogsThatMeetsSecondDefinition = $this->secondDogDefinition()->getDogsThatMeets($game->dogs);
+        $firstDogDefinition = $this->firstDogDefinition();
+        $dogsThatMeetsFirstDefinition = $firstDogDefinition->getDogsThatMeets($game->dogs);
+        $secondDogDefinition = $this->secondDogDefinition();
+        $dogsThatMeetsSecondDefinition = $secondDogDefinition->getDogsThatMeets($game->dogs);
 
         if (empty($dogsThatMeetsFirstDefinition) || empty($dogsThatMeetsSecondDefinition)) {
             throw new IncorrectRuleException($this);
@@ -39,6 +41,14 @@ abstract class TwoDogPlaced implements Rule
             }
         }
 
+        //if (
+        //    $this->isADogPlacedInIncorrectPlace($placedDogsThatMeetsFirstDogDefinition, $secondDogDefinition->getDogsThatDontMeet($game->dogs)) ||
+        //    $this->isADogPlacedInIncorrectPlace($placedDogsThatMeetsSecondDogDefinition, $firstDogDefinition->getDogsThatDontMeet($game->dogs))
+        //
+        //) {
+        //    return RuleCompliance::ViolatesTheRule;
+        //}
+
         if (
             count($dogsThatMeetsFirstDefinition) > count($placedDogsThatMeetsFirstDogDefinition) ||
             count($dogsThatMeetsSecondDefinition) > count($placedDogsThatMeetsSecondDogDefinition)
@@ -47,6 +57,20 @@ abstract class TwoDogPlaced implements Rule
         }
 
         return RuleCompliance::ViolatesTheRule;
+    }
+
+    private function isADogPlacedInIncorrectPlace(array $placedDogsThatMeetFirstDefinition, array $dogsThatDontMeetsTheOtherDefinition): bool {
+
+        foreach ($placedDogsThatMeetFirstDefinition as $placedDog) {
+            $dogsPlacedInIncorrectPosition = array_filter($dogsThatDontMeetsTheOtherDefinition, fn($dog) =>
+                $dog->getName() !== $placedDog->getName() &&
+                ($this->placed($placedDog, $dog))
+            );
+            if (count($dogsPlacedInIncorrectPosition) === 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     protected abstract function placed(Dog $firstDog, Dog $secondDog): bool;

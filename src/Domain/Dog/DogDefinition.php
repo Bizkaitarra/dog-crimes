@@ -48,4 +48,12 @@ class DogDefinition
     public function getDogsThatMeets(array $dogs): array {
         return array_filter($dogs, fn($dog) => $this->meets($dog));
     }
+
+    /**
+     * @param Dog[] $dogs
+     * @return Dog[]
+     */
+    public function getDogsThatDontMeet(array $dogs): array {
+        return array_filter($dogs, fn($dog) => !$this->meets($dog));
+    }
 }

@@ -10,11 +10,15 @@
             background-size: contain;
         }
 
-        #first_place {
+        #dogs_initial_place {
             min-height: 100px;
             height: 100%;
             border: 2px dashed #000;
             border-radius: 0/0;
+        }
+
+        #dogs_initial_place_row {
+            margin-bottom: 10px;
         }
 
         .place {
@@ -35,6 +39,8 @@
 
         .dogs {
             margin-left: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
         }
 
         .dog {
@@ -111,14 +117,6 @@
         function dragEnd() {
             draggedDog = null;
             this.classList.remove('dragging');
-            const hiddenInput = document.querySelector('input[type="hidden"][name="' + this.dataset.dog + '"]');
-            const parentId = this.parentNode.id;
-            let placeNumber = parentId.split('_')[1];
-            if (!isNaN(placeNumber)) {
-                hiddenInput.value = placeNumber;
-            } else {
-                hiddenInput.value = '';
-            }
         }
 
         function dragOver(e) {
@@ -136,12 +134,32 @@
 
         function drop() {
             this.classList.remove('over');
+            if (this.hasChildNodes() && this.id !== 'dogs_initial_place') {
+                let currentDogInPlace = this.firstElementChild;
+                draggedDog.parentNode.appendChild(currentDogInPlace);
+            }
             this.appendChild(draggedDog);
+            check();
         }
 
-        document.getElementById('send-data').addEventListener('click', function() {
-            var formData = new FormData(document.getElementById('placed_dogs_form'));
+        function saveDogsPlaces(dogName) {
+            const hiddenInput = document.querySelector('input[type="hidden"][name="' + dogName + '"]');
+            const dog = document.getElementById(dogName);
+            const parentId = dog.parentNode.id;
+            let placeNumber = parentId.split('_')[1];
+            if (!isNaN(placeNumber)) {
+                hiddenInput.value = placeNumber;
+            } else {
+                hiddenInput.value = '';
+            }
+        }
 
+        function check() {
+            const dogs = document.querySelectorAll('.dog');
+            dogs.forEach(dog => {
+                saveDogsPlaces(dog.id)
+            });
+            var formData = new FormData(document.getElementById('placed_dogs_form'));
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'http://localhost:1000/api/game/check/1');
             xhr.setRequestHeader('Content-Type', 'application/json');
@@ -162,14 +180,15 @@
                 }
             };
             xhr.send(JSON.stringify(Object.fromEntries(formData.entries())));
-        });
+
+        }
 
     </script>
 {% endblock %}
 
 {% block content %}
-    <button id="send-data">Comprobar</button>
-    <div id="midiv"></div>
+
+
 
     <form id="placed_dogs_form">
         <input type="hidden" name="ace" value="">
@@ -179,16 +198,16 @@
         <input type="hidden" name="pepper" value="">
         <input type="hidden" name="suzette" value="">
     </form>
-    <div class="row">
+    <div id="dogs_initial_place_row" class="row">
         <div class="col-1"></div>
         <div class="col-10">
-            <div id="first_place" class="dogs place">
-                <div data-dog="ace" class="dog" draggable="true"><img src="{{ asset('images/ace.png') }}" alt="ace"/></div>
-                <div data-dog="beans" class="dog" draggable="true"><img src="{{ asset('images/beans.png') }}" alt="beans"/></div>
-                <div data-dog="cider" class="dog" draggable="true"><img src="{{ asset('images/cider.png') }}" alt="cider"/></div>
-                <div data-dog="daisy" class="dog" draggable="true"><img src="{{ asset('images/daisy.png') }}" alt="daisy"/></div>
-                <div data-dog="pepper" class="dog" draggable="true"><img src="{{ asset('images/pepper.png') }}" alt="pepper"/></div>
-                <div data-dog="suzette" class="dog" draggable="true"><img src="{{ asset('images/suzette.png') }}" alt="suzette"/></div>
+            <div id="dogs_initial_place" class="dogs place">
+                <div id="ace" data-dog="ace" class="dog" draggable="true"><img src="{{ asset('images/ace.png') }}" alt="ace"/></div>
+                <div id="beans" data-dog="beans" class="dog" draggable="true"><img src="{{ asset('images/beans.png') }}" alt="beans"/></div>
+                <div id="cider" data-dog="cider" class="dog" draggable="true"><img src="{{ asset('images/cider.png') }}" alt="cider"/></div>
+                <div id="daisy" data-dog="daisy" class="dog" draggable="true"><img src="{{ asset('images/daisy.png') }}" alt="daisy"/></div>
+                <div id="pepper" data-dog="pepper" class="dog" draggable="true"><img src="{{ asset('images/pepper.png') }}" alt="pepper"/></div>
+                <div id="suzette" data-dog="suzette" class="dog" draggable="true"><img src="{{ asset('images/suzette.png') }}" alt="suzette"/></div>
             </div>
         </div>
         <div class="col-1"></div>
@@ -199,9 +218,9 @@
         <div class="col-10">
             <div class="row">
                 <div class="col-4"></div>
-                <div id="place_5" class="col-1 place">5</div>
+                <div id="place_5" class="col-1 place"></div>
                 <div class="col-2"></div>
-                <div id="place_6" class="col-1 place">6</div>
+                <div id="place_6" class="col-1 place"></div>
                 <div class="col-4"></div>
             </div>
             <div class="tablero row">
@@ -214,22 +233,20 @@
                                 {% endfor %}
                             </ul>
                         </div>
-                        <div id="place_4" class="col-1 place">4</div>
+                        <div id="place_4" class="col-1 place"></div>
                         <div class="col-6"></div>
-                        <div id="place_1" class="col-1 place">1</div>
+                        <div id="place_1" class="col-1 place"></div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-4"></div>
-                <div id="place_3" class="col-1 place">3</div>
+                <div id="place_3" class="col-1 place"></div>
                 <div class="col-2"></div>
-                <div id="place_2" class="col-1 place">2</div>
+                <div id="place_2" class="col-1 place"></div>
                 <div class="col-4"></div>
             </div>
         </div>
         <div class="col-1"></div>
     </div>
-
-
 {% endblock %}

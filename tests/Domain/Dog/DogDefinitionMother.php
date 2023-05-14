@@ -19,9 +19,9 @@ final class DogDefinitionMother
             $dog->hasBow(),
         );
     }
-    public static function definitionForTwoDog(Dog $firstDog, Dog $secondDog): DogDefinition {
+    public static function definitionForTwoDog(Dog $firstDog, Dog $secondDog, Game $game): DogDefinition {
         //We mock domain to make easy testing. This part of domain has it own test
-        return new DogDefinitionStub([$firstDog->getName() => $firstDog, $secondDog->getName() => $secondDog]);
+        return new DogDefinitionStub([$firstDog->getName() => $firstDog, $secondDog->getName() => $secondDog], $game);
     }
 
     /**
@@ -34,7 +34,7 @@ final class DogDefinitionMother
         foreach ($dogNames as $dogName) {
             $dogs[] = $game->getDogByName($dogName);
         }
-        return new DogDefinitionStub($dogs);
+        return new DogDefinitionStub($dogs, $game);
     }
 
     public static function notMeeteableDogDefinition(): DogDefinition {
@@ -51,13 +51,24 @@ final class DogDefinitionMother
 }
 
 class DogDefinitionStub extends DogDefinition {
-    public function __construct(private array $dogs)
+    public function __construct(private array $dogs, private Game $game)
     {
     }
 
     public function getDogsThatMeets(array $dogs): array
     {
         return $this->dogs;
+    }
+
+    public function getDogsThatDontMeet(array $dogs): array
+    {
+        $dogs = [];
+        foreach ($this->game->dogs  as $dog) {
+            if (!in_array($dog, $this->dogs)) {
+                $dogs[] = $dog;
+            }
+        }
+        return $dogs;
     }
 
 }
