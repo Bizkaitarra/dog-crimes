@@ -71,12 +71,20 @@ final class RuleContext implements Context
         $this->rule = new DogPlacedInAPlaceWithEvidence(
             '',
             new DogDefinition($dogName, null, null, null, null, null, null),
-            new Evidence($evidence)
+            $this->makeEvidence($evidence)
         );
     }
-
-
-
+    private function makeEvidence(string $evidence): Evidence
+    {
+        return match (strtoupper($evidence)) {
+            'TENNIS_BALL' => new Evidence(Evidence::TENNIS_BALL),
+            'SOCK' => new Evidence(Evidence::SOCK),
+            'RAWHIDE' => new Evidence(Evidence::RAWHIDE),
+            'STICK' => new Evidence(Evidence::STICK),
+            'PAW_PRINT' => new Evidence(Evidence::PAW_PRINT),
+            'ROPE_TOY' => new Evidence(Evidence::ROPE_TOY),
+        };
+    }
 
     private function makeThingDefinition(string $thing): DogDefinition
     {

@@ -20,10 +20,14 @@ final class DogPlacedInAPlaceWithEvidence implements Rule
     public function meets(Game $game): RuleCompliance
     {
         $dogs = $this->dogDefinition->getDogsThatMeets($game->dogs);
-        if ($dogs[Dog::CIDER]->isPlaced()) {
-            return RuleCompliance::ViolatesTheRule;
+        $dog = $dogs[Dog::CIDER];
+        if (!$dog->isPlaced()) {
+            return RuleCompliance::NotMeetNorViolateTheRule;
         }
-        return RuleCompliance::NotMeetNorViolateTheRule;
+        if ($dog->getBoardPlace()->hasEvidence($this->evidence)) {
+            return RuleCompliance::MeetsTheRule;
+        }
+        return RuleCompliance::ViolatesTheRule;
     }
 
     public function __toString(): string
