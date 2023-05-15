@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace App\Tests\Behat\Rule;
 
 use App\Domain\Dog\DogDefinition;
+use App\Domain\Evidence;
 use App\Domain\Game\Game;
 use App\Domain\Rule\DogAcrossToDogRule;
+use App\Domain\Rule\DogPlacedInAPlaceWithEvidence;
+use App\Domain\Rule\Rule;
 use App\Domain\Rule\RuleCompliance;
 use Behat\Behat\Context\Context;
 
 final class RuleContext implements Context
 {
-    private DogAcrossToDogRule $dogAcrossToDogRule;
+    private Rule $rule;
     private Game $game;
     private RuleCompliance $ruleResult;
 
@@ -27,7 +30,7 @@ final class RuleContext implements Context
      */
     public function aDogWithNameIsAcrossOtherDogWithName(string $firstDogName, string $secondDogName): void
     {
-        $this->dogAcrossToDogRule = new DogAcrossToDogRule(
+        $this->rule = new DogAcrossToDogRule(
             '',
             new DogDefinition($firstDogName, null, null, null, null, null, null),
             new DogDefinition($secondDogName, null, null, null, null, null, null),
@@ -40,7 +43,7 @@ final class RuleContext implements Context
     public function aDogWithThingAcrossADogWithOtherThing(string $firstThing, string $secondThing): void
     {
 
-        $this->dogAcrossToDogRule = new DogAcrossToDogRule(
+        $this->rule = new DogAcrossToDogRule(
             '',
             $this->makeThingDefinition($firstThing),
             $this->makeThingDefinition($secondThing)
@@ -53,12 +56,27 @@ final class RuleContext implements Context
     public function aDogNamedIsAcrossADogWithOtherThing(string $dogName, string $secondThing): void
     {
 
-        $this->dogAcrossToDogRule = new DogAcrossToDogRule(
+        $this->rule = new DogAcrossToDogRule(
             '',
             new DogDefinition($dogName, null, null, null, null, null, null),
             $this->makeThingDefinition($secondThing)
         );
     }
+
+    /**
+     * @Given the rule is that a dog named :dogName is in a place with :evidence
+     */
+    public function theRuleIsThatIsInAPlaceWith(string $dogName, string $evidence)
+    {
+        $this->rule = new DogPlacedInAPlaceWithEvidence(
+            '',
+            new DogDefinition($dogName, null, null, null, null, null, null),
+            new Evidence($evidence)
+        );
+    }
+
+
+
 
     private function makeThingDefinition(string $thing): DogDefinition
     {
@@ -86,7 +104,7 @@ final class RuleContext implements Context
      */
     public function theRuleIsChecked()
     {
-        $this->ruleResult = $this->dogAcrossToDogRule->meets($this->game);
+        $this->ruleResult = $this->rule->meets($this->game);
     }
 
     /**
@@ -133,6 +151,7 @@ final class RuleContext implements Context
         $dog = $this->game->getDogByName($dogName);
         $this->game->place($dog, $boardPlaceNumber);
     }
+
 
 
 }
