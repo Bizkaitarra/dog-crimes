@@ -52,6 +52,11 @@ code-style: ## Runs php-cs to fix code styling following Symfony rules
 play: ## Play to dog crimes
 	U_ID=${UID} docker exec --user ${UID} ${DOCKER_BE} bin/console dog-crimes:play
 
+test-behat: ## Tests using behat
+	U_ID=${UID} docker exec --user ${UID} ${DOCKER_BE} vendor/bin/behat
+
+test-phpunit: ## Tests using phpunit
+	U_ID=${UID} docker exec --user ${UID} ${DOCKER_BE} bin/phpunit
 
 .PHONY: migrations
 
