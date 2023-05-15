@@ -9,9 +9,8 @@ use App\Domain\Game\Game;
 use App\Domain\Rule\DogAcrossToDogRule;
 use App\Domain\Rule\RuleCompliance;
 use Behat\Behat\Context\Context;
-use Behat\Behat\Tester\Exception\PendingException;
 
-final class DogAcrossDogRuleContext implements Context
+final class RuleContext implements Context
 {
     private DogAcrossToDogRule $dogAcrossToDogRule;
     private Game $game;
