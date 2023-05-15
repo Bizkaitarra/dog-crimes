@@ -3,6 +3,7 @@ default:
         default:
             contexts:
                 - App\Tests\Behat\Rule\RuleContext
+                - App\Tests\Behat\Dog\DogDefinitionContext
 
     extensions:
         FriendsOfBehat\SymfonyExtension: null
