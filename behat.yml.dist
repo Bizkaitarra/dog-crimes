@@ -2,7 +2,7 @@ default:
     suites:
         default:
             contexts:
-                - App\Tests\Behat\DemoContext
+                - App\Tests\Behat\Rule\DogAcrossDogRuleContext
 
     extensions:
         FriendsOfBehat\SymfonyExtension: null
