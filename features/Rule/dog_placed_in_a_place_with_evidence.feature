@@ -20,3 +20,9 @@ Feature:
     And "Cider" is placed in "2"
     When the rule is checked
     Then the result is that the rule has been meet
+
+  Scenario: A dog with bandana should be placed in a place with a Rope Toy but no dogs are placed
+    Given a new game with crime "Cake" is created
+    And the rule is that a dog with "Bandana" is in a place with "Rope_toy"
+    When the rule is checked
+    Then the result is that the rule has been meet not meet nor violated

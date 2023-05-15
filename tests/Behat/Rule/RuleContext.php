@@ -74,6 +74,18 @@ final class RuleContext implements Context
             $this->makeEvidence($evidence)
         );
     }
+
+    /**
+     * @Given the rule is that a dog with :thing is in a place with :evidence
+     */
+    public function theRuleIsThatADogWithThingIsInAPlaceWith(string $thing, string $evidence)
+    {
+        $this->rule = new DogPlacedInAPlaceWithEvidence(
+            '',
+            $this->makeThingDefinition($thing),
+            $this->makeEvidence($evidence)
+        );
+    }
     private function makeEvidence(string $evidence): Evidence
     {
         return match (strtoupper($evidence)) {

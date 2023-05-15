@@ -20,6 +20,10 @@ final class DogPlacedInAPlaceWithEvidence implements Rule
     public function meets(Game $game): RuleCompliance
     {
         $dogs = $this->dogDefinition->getDogsThatMeets($game->dogs);
+        $placedDogs = array_filter($dogs, fn($dog) => $dog->isPlaced());
+        if (count($placedDogs) === 0) {
+            return RuleCompliance::NotMeetNorViolateTheRule;
+        }
         $dog = $dogs[Dog::CIDER];
         if (!$dog->isPlaced()) {
             return RuleCompliance::NotMeetNorViolateTheRule;
@@ -27,6 +31,7 @@ final class DogPlacedInAPlaceWithEvidence implements Rule
         if ($dog->getBoardPlace()->hasEvidence($this->evidence)) {
             return RuleCompliance::MeetsTheRule;
         }
+
         return RuleCompliance::ViolatesTheRule;
     }
 
