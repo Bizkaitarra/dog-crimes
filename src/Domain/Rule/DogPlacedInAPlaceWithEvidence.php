@@ -18,7 +18,7 @@ final class DogPlacedInAPlaceWithEvidence implements Rule
 
     public function meets(Game $game): RuleCompliance
     {
-        return RuleCompliance::MeetsTheRule;
+        return RuleCompliance::NotMeetNorViolateTheRule;
     }
 
     public function __toString(): string
