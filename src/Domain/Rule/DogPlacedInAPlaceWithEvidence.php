@@ -24,14 +24,14 @@ final class DogPlacedInAPlaceWithEvidence implements Rule
         if (count($placedDogs) === 0) {
             return RuleCompliance::NotMeetNorViolateTheRule;
         }
-        $dog = $dogs[Dog::CIDER];
-        if (!$dog->isPlaced()) {
+        foreach ($placedDogs as $dog) {
+            if ($dog->getBoardPlace()->hasEvidence($this->evidence)) {
+                return RuleCompliance::MeetsTheRule;
+            }
+        }
+        if (count($placedDogs) < count($dogs)) {
             return RuleCompliance::NotMeetNorViolateTheRule;
         }
-        if ($dog->getBoardPlace()->hasEvidence($this->evidence)) {
-            return RuleCompliance::MeetsTheRule;
-        }
-
         return RuleCompliance::ViolatesTheRule;
     }
 
