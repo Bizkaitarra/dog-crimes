@@ -50,3 +50,11 @@ make play
 
 Luego siguiendo las instrucciones podremos posicionar los perros.
 
+## Juego en modo web
+
+Para jugar al juego en modo web se debe ir a http://localhost:1000/play/1 
+
+# Colaboraciones
+
+El repositorio está totalmente abierto a aportaciones y colaboraciones de cualquiera que lo desee.
+
