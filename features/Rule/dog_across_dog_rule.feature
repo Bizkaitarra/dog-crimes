@@ -36,6 +36,7 @@ Feature:
     And "Pepper" is placed in "6"
     When the rule is checked
     Then the result is that the rule has been meet not meet nor violated
+
   Scenario: Cider and Ace should be across and only ace and other dog is placed and they are across
     Given a new game with crime "Cake" is created
     And the rule is that "Cider" is across to "Ace"
