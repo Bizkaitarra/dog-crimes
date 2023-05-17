@@ -18,6 +18,7 @@
         "twig/twig": "^2.0"
     },
     "require-dev": {
+        "dvdoug/behat-code-coverage": "^5.3",
         "friends-of-behat/symfony-extension": "^2.0",
         "infection/infection": "^0.26.20",
         "phpunit/phpunit": "^9.5",

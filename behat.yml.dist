@@ -7,3 +7,13 @@ default:
 
     extensions:
         FriendsOfBehat\SymfonyExtension: null
+        DVDoug\Behat\CodeCoverage\Extension:
+                    filter:
+                        include:
+                            directories:
+                                'src': ~
+                    reports:
+                        html:
+                            target: build/coverage-behat
+                        text:
+                            showColors: true
