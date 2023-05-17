@@ -4,8 +4,10 @@ namespace App\Infrastructure\Game;
 
 use App\Application\Game\FindGame;
 use App\Application\Game\FindGamesIds;
+use App\Domain\BoardPlace\Board;
 use App\Domain\BoardPlace\BoardPlace;
 use App\Domain\Dog\Dog;
+use App\Domain\Dog\DogCollection;
 use App\Domain\Game\Game;
 use App\Domain\Rule\RuleCompliance;
 use Symfony\Component\Console\Command\Command;
@@ -44,7 +46,7 @@ final class GameCommand extends Command
         $this->explainRules($game, $output);
         $this->explainWhereAreDogsPlaced($game, $output);
 
-        while ($this->askForConfirmation($input, $output, '¿Quieres posicionar algún otro perro?')) {
+        while ($this->askForConfirmation($input, $output, '¿Quieres posicionar algún perro?')) {
             $selectedDog = $this->askForNewDogToBePlaced($input, $output,$game, $game->dogs);
             $selectedPlace = $this->askForNewPlace($input, $output,$game->board);
             $game->place($selectedDog, $selectedPlace->placeNumber);
@@ -97,12 +99,12 @@ final class GameCommand extends Command
         InputInterface $input,
         OutputInterface $output,
         Game $game,
-        array $dogs
+        DogCollection $dogs
     ): Dog {
         $helper = $this->getHelper('question');
         $question = new ChoiceQuestion(
             'Indica un perro',
-            $dogs
+            $dogs->toArray()
         );
         $question->setErrorMessage('%s no es un perro válido.');
 
@@ -117,12 +119,12 @@ final class GameCommand extends Command
     private function askForNewPlace(
         InputInterface $input,
         OutputInterface $output,
-        array $boardPlaces
+        Board $board
     ): BoardPlace {
         $helper = $this->getHelper('question');
         $question = new ChoiceQuestion(
             'Indica un lugar donde posicionar al perro',
-            $boardPlaces
+            $board->toArray()
         );
         $question->setErrorMessage('%s no es un lugar válido.');
 

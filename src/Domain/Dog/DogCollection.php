@@ -82,4 +82,8 @@ final class DogCollection implements IteratorAggregate
     {
         return new ArrayIterator($this->dogs);
     }
+
+    public function toArray() {
+        return $this->dogs;
+    }
 }

@@ -26,7 +26,7 @@ final class JSONGameRepository implements GameRepository
         foreach($files as $file) {
             $extension = pathinfo($file, PATHINFO_EXTENSION);
             if($extension == 'json') {
-                $result[] = new GameId(basename($file, $extension));
+                $result[] = new GameId(basename($file, '.'.$extension));
             }
         }
         return $result;

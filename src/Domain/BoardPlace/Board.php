@@ -123,4 +123,9 @@ final class Board implements IteratorAggregate
             )
         );
     }
+
+    public function toArray(): array
+    {
+        return $this->boardPlaces;
+    }
 }
