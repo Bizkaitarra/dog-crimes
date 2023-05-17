@@ -21,7 +21,7 @@ class DogRightToDogRule extends TwoDogPlaced
         return $this->ruleText;
     }
 
-    protected function placed(Dog $firstDog, Dog $secondDog): bool
+    protected function areDogsCorrectlyPlaced(Dog $firstDog, Dog $secondDog): bool
     {
         return $firstDog->getBoardPlace()->isInRightOf($secondDog->getBoardPlace());
     }

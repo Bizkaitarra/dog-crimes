@@ -29,7 +29,7 @@ abstract class TwoDogPlaced implements Rule
         foreach ($placedDogsThatMeetsFirstDogDefinition as $dogThatMeetsFirstDogDefinition) {
             /** @var Dog $placedDogThatMeetsSecondDogDefinition */
             foreach ($placedDogsThatMeetsSecondDogDefinition as $placedDogThatMeetsSecondDogDefinition) {
-                if ($this->placed($dogThatMeetsFirstDogDefinition, $placedDogThatMeetsSecondDogDefinition)) {
+                if ($this->areDogsCorrectlyPlaced($dogThatMeetsFirstDogDefinition, $placedDogThatMeetsSecondDogDefinition)) {
                     return RuleCompliance::MeetsTheRule;
                 }
             }
@@ -67,7 +67,7 @@ abstract class TwoDogPlaced implements Rule
 
     }
 
-    protected abstract function placed(Dog $firstDog, Dog $secondDog): bool;
+    protected abstract function areDogsCorrectlyPlaced(Dog $firstDog, Dog $secondDog): bool;
     protected abstract function placedDog(Dog $dog): ?Dog;
 
     protected abstract function firstDogDefinition(): DogDefinition;
