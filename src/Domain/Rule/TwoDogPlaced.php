@@ -18,18 +18,12 @@ abstract class TwoDogPlaced implements Rule
         $secondDogDefinition = $this->secondDogDefinition();
         $dogsThatMeetsSecondDefinition = $secondDogDefinition->getDogsThatMeets($game->dogs);
 
-        if (empty($dogsThatMeetsFirstDefinition) || empty($dogsThatMeetsSecondDefinition)) {
+        if ($dogsThatMeetsFirstDefinition->empty() || $dogsThatMeetsSecondDefinition->empty()) {
             throw new IncorrectRuleException($this);
         }
 
-        $placedDogsThatMeetsFirstDogDefinition = array_filter(
-            $dogsThatMeetsFirstDefinition,
-            fn (Dog $dog) => $dog->isPlaced()
-        );
-        $placedDogsThatMeetsSecondDogDefinition = array_filter(
-            $dogsThatMeetsSecondDefinition,
-            fn (Dog $dog) => $dog->isPlaced()
-        );
+        $placedDogsThatMeetsFirstDogDefinition = $dogsThatMeetsFirstDefinition->placedDogs();
+        $placedDogsThatMeetsSecondDogDefinition = $dogsThatMeetsSecondDefinition->placedDogs();
 
         /** @var Dog $dogThatMeetsFirstDogDefinition */
         foreach ($placedDogsThatMeetsFirstDogDefinition as $dogThatMeetsFirstDogDefinition) {
@@ -43,14 +37,14 @@ abstract class TwoDogPlaced implements Rule
 
         // Si todos los perros de 1 están colocados y todos los de 2 también pero no se cumple
         if (
-            count($dogsThatMeetsFirstDefinition) === count($placedDogsThatMeetsFirstDogDefinition) && count($dogsThatMeetsSecondDefinition) === count($placedDogsThatMeetsSecondDogDefinition)
+            $dogsThatMeetsFirstDefinition->count() === $placedDogsThatMeetsFirstDogDefinition->count() &&
+            $dogsThatMeetsSecondDefinition->count() === $placedDogsThatMeetsSecondDogDefinition->count()
         ) {
             return RuleCompliance::ViolatesTheRule;
         }
 
         // Si todos los perros de 1 estan colocados y tienen alguien en frente (que no sea de 2)
-        if (count($dogsThatMeetsFirstDefinition) === count($placedDogsThatMeetsFirstDogDefinition)) {
-            /** @var Dog $dogThatMeetsFirstDogDefinition */
+        if ($dogsThatMeetsFirstDefinition->count() === $placedDogsThatMeetsFirstDogDefinition->count()) {
             foreach ($placedDogsThatMeetsFirstDogDefinition as $dogThatMeetsFirstDogDefinition) {
                 if ($this->placedDog($dogThatMeetsFirstDogDefinition) === null) {
                     return RuleCompliance::NotMeetNorViolateTheRule;
@@ -59,8 +53,7 @@ abstract class TwoDogPlaced implements Rule
             return RuleCompliance::ViolatesTheRule;
         }
         // Si todos los perros de 2 estan colocados y tienen alguien en frente que no sea de 1
-        if (count($dogsThatMeetsSecondDefinition) === count($placedDogsThatMeetsSecondDogDefinition)) {
-            /** @var Dog $dogThatMeetsSecondDogDefinition */
+        if ($dogsThatMeetsSecondDefinition->count() === $placedDogsThatMeetsSecondDogDefinition->count()) {
             foreach ($placedDogsThatMeetsSecondDogDefinition as $dogThatMeetsSecondDogDefinition) {
                 if ($this->placedDog($dogThatMeetsSecondDogDefinition) === null) {
                     return RuleCompliance::NotMeetNorViolateTheRule;

@@ -5,13 +5,13 @@ namespace App\Domain\Dog;
 class DogDefinition
 {
     public function __construct(
-        private ?string $name,
-        private ?bool $hasBandana,
-        private ?bool $hasTanTail,
-        private ?bool $hasPerkyEars,
-        private ?bool $hasWhitePaws,
-        private ?bool $hasCollar,
-        private ?bool $hasBow
+        private readonly ?string $name,
+        private readonly ?bool   $hasBandana,
+        private readonly ?bool   $hasTanTail,
+        private readonly ?bool   $hasPerkyEars,
+        private readonly ?bool   $hasWhitePaws,
+        private readonly ?bool   $hasCollar,
+        private readonly ?bool $hasBow
     )
     {
     }
@@ -41,19 +41,13 @@ class DogDefinition
         return true;
     }
 
-    /**
-     * @param Dog[] $dogs
-     * @return Dog[]
-     */
-    public function getDogsThatMeets(array $dogs): array {
-        return array_filter($dogs, fn($dog) => $this->meets($dog));
-    }
-
-    /**
-     * @param Dog[] $dogs
-     * @return Dog[]
-     */
-    public function getDogsThatDontMeet(array $dogs): array {
-        return array_filter($dogs, fn($dog) => !$this->meets($dog));
+    public function getDogsThatMeets(DogCollection $dogs): DogCollection {
+        $dogsThatMeets = new DogCollection([]);
+        foreach ($dogs as $dog) {
+            if ($this->meets($dog)) {
+                $dogsThatMeets->addDog($dog);
+            }
+        }
+        return $dogsThatMeets;
     }
 }

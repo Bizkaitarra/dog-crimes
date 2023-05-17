@@ -14,8 +14,8 @@ final class DogsWherePlayingOutside implements Rule
      * @param DogDefinition[] $dogDefinitions
      */
     public function __construct(
-        private string $ruleText,
-        private array $dogDefinitions
+        private readonly string $ruleText,
+        private readonly array  $dogDefinitions
     )
     {
     }
@@ -28,15 +28,12 @@ final class DogsWherePlayingOutside implements Rule
         foreach ($this->dogDefinitions as $dogDefinition) {
             $dogsThatMeetsDefinition = $dogDefinition->getDogsThatMeets($game->dogs);
 
-            if (count($dogsThatMeetsDefinition) === 0) {
+            if ($dogsThatMeetsDefinition->empty()) {
                 throw new IncorrectRuleException($this);
             }
 
-            $notPlacedDogsThatMeetsDefinition = array_filter(
-                $dogsThatMeetsDefinition,
-                fn (Dog $dog) => !$dog->isPlaced()
-            );
-            if (count($notPlacedDogsThatMeetsDefinition) === 0) {
+            $notPlacedDogsThatMeetsDefinition = $dogsThatMeetsDefinition->unPlacedDogs();
+            if ($notPlacedDogsThatMeetsDefinition->empty()) {
                 return RuleCompliance::ViolatesTheRule;
             }
         }

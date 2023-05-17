@@ -83,8 +83,8 @@ final class DogNextToDogRuleTest extends TestCase
         $game->place(Dog::makeCider(), 1);
         $game->place(Dog::makeBeans(), 3);
 
-        $firstDogDefinition = DogDefinitionMother::definitionForTwoDog(Dog::makeCider(), Dog::makeDaisy(), $game);
-        $secondDogDefinition = DogDefinitionMother::definitionForTwoDog(Dog::makeBeans(), Dog::makeAce(), $game);
+        $firstDogDefinition = DogDefinitionMother::definitionForTwoDog(Dog::makeCider(), Dog::makeDaisy());
+        $secondDogDefinition = DogDefinitionMother::definitionForTwoDog(Dog::makeBeans(), Dog::makeAce());
 
         $rule = new DogNextToDogRule(
             'Cider is next to Daisy',
@@ -174,8 +174,7 @@ final class DogNextToDogRuleTest extends TestCase
 
         $firstDogDefinition = DogDefinitionMother::definitionForTwoDog(
             $game->getDogByName(Dog::CIDER),
-            $game->getDogByName(Dog::PEPPER),
-            $game
+            $game->getDogByName(Dog::PEPPER)
         );
         $secondDogDefinition = DogDefinitionMother::specificDogDefinition(Dog::makeDaisy());
 
@@ -204,13 +203,11 @@ final class DogNextToDogRuleTest extends TestCase
 
         $firstDogDefinition = DogDefinitionMother::definitionForTwoDog(
             $game->getDogByName(Dog::CIDER),
-            $game->getDogByName(Dog::PEPPER),
-            $game
+            $game->getDogByName(Dog::PEPPER)
         );
         $secondDogDefinition = DogDefinitionMother::definitionForTwoDog(
             $game->getDogByName(Dog::DAISY),
-            $game->getDogByName(Dog::ACE),
-            $game
+            $game->getDogByName(Dog::ACE)
         );
 
         $game->place(Dog::makeCider(), 1);

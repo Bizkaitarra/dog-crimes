@@ -42,7 +42,7 @@ final class DogDefinitionContext implements Context
      */
     public function theDogDefinitionShouldReturnDogs(int $number)
     {
-        $countOfDogsThatMeets = count($this->dogDefinition->getDogsThatMeets($this->game->dogs));
+        $countOfDogsThatMeets = $this->dogDefinition->getDogsThatMeets($this->game->dogs)->count();
         assert($countOfDogsThatMeets === $number);
     }
 
@@ -53,7 +53,7 @@ final class DogDefinitionContext implements Context
     {
         $dogsThatMeetDefinition = $this->dogDefinition->getDogsThatMeets($this->game->dogs);
         $rows = $table->getRows();
-        $countDogsThatMeetDefinition = count($dogsThatMeetDefinition);
+        $countDogsThatMeetDefinition = $dogsThatMeetDefinition->count();
         $expectedDogCount = count($rows);
         assert(
             $countDogsThatMeetDefinition === $expectedDogCount,
@@ -65,7 +65,7 @@ final class DogDefinitionContext implements Context
         );
         foreach ($rows as $row) {
             assert(
-                isset($dogsThatMeetDefinition[$row[0]]),
+                $dogsThatMeetDefinition->getDogByName($row[0]),
                 sprintf('Dog %s was expected',$row[0])
             );
         }

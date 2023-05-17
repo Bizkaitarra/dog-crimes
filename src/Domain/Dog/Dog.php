@@ -1,7 +1,7 @@
 <?php
 namespace App\Domain\Dog;
 
-use App\Domain\BoardPlace;
+use App\Domain\BoardPlace\BoardPlace;
 
 class Dog
 {
@@ -161,6 +161,10 @@ class Dog
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function equals(Dog $otherDog) {
+        return $otherDog->getName() === $this->getName();
     }
 
 

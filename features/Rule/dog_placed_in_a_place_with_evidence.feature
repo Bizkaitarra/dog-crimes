@@ -49,3 +49,11 @@ Feature:
     And "Ace" is placed in "3"
     When the rule is checked
     Then the result is that the rule has been meet
+
+  Scenario: Ace should be placed in a place with a Rope Toy but the existing to placed with Rope Toy has already a dog placed
+    Given a new game with crime "Cake" is created
+    And the rule is that a dog named "Ace" is in a place with "Rope_toy"
+    And "Daisy" is placed in "2"
+    And "Suzette" is placed in "4"
+    When the rule is checked
+    Then the result is that the rule has been violated

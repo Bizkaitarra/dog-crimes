@@ -1,6 +1,16 @@
 {
   "rules": [
     {
+      "text": "Beans estaba sentado delante de los deberes",
+      "type": "DogPlacedInAPlaceWithCrime",
+      "firstDogDefinition": {
+        "name": "Beans"
+      },
+      "evidence": {
+        "name": "Beans"
+      }
+    },
+    {
       "text": "Ace está sentado enfrente de Beans",
       "type": "DogAcrossToDogRule",
       "firstDogDefinition": {

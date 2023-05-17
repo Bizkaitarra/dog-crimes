@@ -4,7 +4,7 @@ namespace App\Infrastructure\Game;
 
 use App\Application\Game\FindGame;
 use App\Application\Game\FindGamesIds;
-use App\Domain\BoardPlace;
+use App\Domain\BoardPlace\BoardPlace;
 use App\Domain\Dog\Dog;
 use App\Domain\Game\Game;
 use App\Domain\Rule\RuleCompliance;
@@ -65,7 +65,7 @@ final class GameCommand extends Command
     public function explainWhereAreDogsPlaced(Game $game, OutputInterface $output): void
     {
         $placedDogs = $game->placedDogs();
-        if (count($placedDogs) === 0) {
+        if ($placedDogs->empty()) {
             $output->writeln('No hay perros posicionados');
         }
         foreach ($placedDogs as $dog) {

@@ -2,7 +2,6 @@
 
 namespace App\Domain\Rule;
 
-use App\Domain\Dog\Dog;
 use App\Domain\Dog\DogDefinition;
 use App\Domain\Evidence;
 use App\Domain\Game\Game;
@@ -20,19 +19,27 @@ final class DogPlacedInAPlaceWithEvidence implements Rule
     public function meets(Game $game): RuleCompliance
     {
         $dogs = $this->dogDefinition->getDogsThatMeets($game->dogs);
-        $placedDogs = array_filter($dogs, fn($dog) => $dog->isPlaced());
-        if (count($placedDogs) === 0) {
-            return RuleCompliance::NotMeetNorViolateTheRule;
-        }
+        $placedDogs = $dogs->placedDogs();
+
         foreach ($placedDogs as $dog) {
             if ($dog->getBoardPlace()->hasEvidence($this->evidence)) {
                 return RuleCompliance::MeetsTheRule;
             }
         }
-        if (count($placedDogs) < count($dogs)) {
+        if (!$this->areThereEnoughtFreePlaces($game)) {
+            return RuleCompliance::ViolatesTheRule;
+        }
+        if ($placedDogs->empty()) {
+            return RuleCompliance::NotMeetNorViolateTheRule;
+        }
+        if ($placedDogs->hasLessDogsThan($dogs)) {
             return RuleCompliance::NotMeetNorViolateTheRule;
         }
         return RuleCompliance::ViolatesTheRule;
+    }
+
+    private function areThereEnoughtFreePlaces(Game $game): bool {
+        return !$game->freeBoardPlacesWithEvidence($this->evidence)->empty();
     }
 
     public function __toString(): string

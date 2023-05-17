@@ -3,6 +3,7 @@
 namespace App\Tests\Domain\Dog;
 
 use App\Domain\Dog\Dog;
+use App\Domain\Dog\DogCollection;
 use App\Domain\Dog\DogDefinition;
 use PHPUnit\Framework\TestCase;
 
@@ -23,7 +24,7 @@ final class DogDefinitionTest extends TestCase
             null
         );
         $this->assertCount(6, $dogDefinition->getDogsThatMeets(
-            [Dog::makeDaisy(), Dog::makeAce(), Dog::makeCider(), Dog::makePepper(), Dog::makeSuzette(), Dog::makeBeans()]
+            DogCollection::makeCompleteCollection()
         ));
     }
 
@@ -42,7 +43,7 @@ final class DogDefinitionTest extends TestCase
             null
         );
         $this->assertCount(1, $dogDefinition->getDogsThatMeets(
-            [Dog::makeDaisy(), Dog::makeAce(), Dog::makeCider(), Dog::makePepper(), Dog::makeSuzette(), Dog::makeBeans()]
+            DogCollection::makeCompleteCollection()
         ));
     }
 
@@ -61,7 +62,7 @@ final class DogDefinitionTest extends TestCase
             null
         );
         $this->assertCount(0, $dogDefinition->getDogsThatMeets(
-            [Dog::makeDaisy()]
+            new DogCollection([Dog::makeDaisy()])
         ));
     }
 }

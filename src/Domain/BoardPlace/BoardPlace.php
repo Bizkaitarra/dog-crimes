@@ -1,7 +1,9 @@
 <?php
-namespace App\Domain;
+namespace App\Domain\BoardPlace;
 
+use App\Domain\Crime;
 use App\Domain\Dog\Dog;
+use App\Domain\Evidence;
 
 class BoardPlace
 {
@@ -82,6 +84,10 @@ class BoardPlace
         }
 
         return null;
+    }
+
+    public function hasDog(): bool {
+        return $this->getDog() instanceof Dog;
     }
 
     public function placeDog(Dog $dog) {
