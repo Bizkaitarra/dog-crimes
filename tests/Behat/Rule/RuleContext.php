@@ -11,6 +11,7 @@ use App\Domain\Rule\DogAcrossToDogRule;
 use App\Domain\Rule\DogPlacedInAPlaceWithEvidence;
 use App\Domain\Rule\Rule;
 use App\Domain\Rule\RuleCompliance;
+use App\Domain\Rule\XDogsWherePlayingOutside;
 use Behat\Behat\Context\Context;
 
 final class RuleContext implements Context
@@ -86,6 +87,7 @@ final class RuleContext implements Context
             $this->makeEvidence($evidence)
         );
     }
+
     private function makeEvidence(string $evidence): Evidence
     {
         return match (strtoupper($evidence)) {
@@ -96,6 +98,16 @@ final class RuleContext implements Context
             'PAW_PRINT' => new Evidence(Evidence::PAW_PRINT),
             'ROPE_TOY' => new Evidence(Evidence::ROPE_TOY),
         };
+    }
+    /**
+     * @Given the rule is that :x dogs where playing outside
+     */
+    public function theRuleIsThatXDogsWherePlayingOutside(int $numberOfDogsPlayingOutside)
+    {
+        $this->rule = new XDogsWherePlayingOutside(
+            '',
+            $numberOfDogsPlayingOutside
+        );
     }
 
     private function makeThingDefinition(string $thing): DogDefinition
