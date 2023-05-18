@@ -11,7 +11,7 @@ abstract class TwoDogPlaced implements Rule
     /**
      * @throws IncorrectRuleException
      */
-    public function meets(Game $game): RuleCompliance
+    public function meets(Game $game): bool
     {
         $firstDogDefinition = $this->firstDogDefinition();
         $dogsThatMeetsFirstDefinition = $firstDogDefinition->getDogsThatMeets($game->dogs);
@@ -30,46 +30,15 @@ abstract class TwoDogPlaced implements Rule
             /** @var Dog $placedDogThatMeetsSecondDogDefinition */
             foreach ($placedDogsThatMeetsSecondDogDefinition as $placedDogThatMeetsSecondDogDefinition) {
                 if ($this->areDogsCorrectlyPlaced($dogThatMeetsFirstDogDefinition, $placedDogThatMeetsSecondDogDefinition)) {
-                    return RuleCompliance::MeetsTheRule;
+                    return true;
                 }
             }
         }
-
-        // Si todos los perros de 1 están colocados y todos los de 2 también pero no se cumple
-        if (
-            $dogsThatMeetsFirstDefinition->count() === $placedDogsThatMeetsFirstDogDefinition->count() &&
-            $dogsThatMeetsSecondDefinition->count() === $placedDogsThatMeetsSecondDogDefinition->count()
-        ) {
-            return RuleCompliance::ViolatesTheRule;
-        }
-
-        // Si todos los perros de 1 estan colocados y tienen alguien en frente (que no sea de 2)
-        if ($dogsThatMeetsFirstDefinition->count() === $placedDogsThatMeetsFirstDogDefinition->count()) {
-            foreach ($placedDogsThatMeetsFirstDogDefinition as $dogThatMeetsFirstDogDefinition) {
-                if ($this->placedDog($dogThatMeetsFirstDogDefinition) === null) {
-                    return RuleCompliance::NotMeetNorViolateTheRule;
-                }
-            }
-            return RuleCompliance::ViolatesTheRule;
-        }
-        // Si todos los perros de 2 estan colocados y tienen alguien en frente que no sea de 1
-        if ($dogsThatMeetsSecondDefinition->count() === $placedDogsThatMeetsSecondDogDefinition->count()) {
-            foreach ($placedDogsThatMeetsSecondDogDefinition as $dogThatMeetsSecondDogDefinition) {
-                if ($this->placedDog($dogThatMeetsSecondDogDefinition) === null) {
-                    return RuleCompliance::NotMeetNorViolateTheRule;
-                }
-            }
-            return RuleCompliance::ViolatesTheRule;
-        }
-
-
-        return RuleCompliance::NotMeetNorViolateTheRule;
+        return false;
 
     }
 
     protected abstract function areDogsCorrectlyPlaced(Dog $firstDog, Dog $secondDog): bool;
-    protected abstract function placedDog(Dog $dog): ?Dog;
-
     protected abstract function firstDogDefinition(): DogDefinition;
     protected abstract function secondDogDefinition(): DogDefinition;
 }

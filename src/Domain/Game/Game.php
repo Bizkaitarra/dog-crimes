@@ -8,7 +8,6 @@ use App\Domain\Dog\DogCollection;
 use App\Domain\Evidence;
 use App\Domain\Rule\IncorrectRuleException;
 use App\Domain\Rule\Rule;
-use App\Domain\Rule\RuleCompliance;
 
 class Game
 {
@@ -38,7 +37,7 @@ class Game
     }
 
     /**
-     * @return RuleCompliance[]
+     * @return bool[]
      * @throws IncorrectRuleException
      */
     public function rules(): array
@@ -63,7 +62,7 @@ class Game
     public function isSolved(): bool
     {
         foreach ($this->rules as $rule) {
-            if ($rule->meets($this) !== RuleCompliance::MeetsTheRule) {
+            if (!$rule->meets($this)) {
                 return false;
             }
         }

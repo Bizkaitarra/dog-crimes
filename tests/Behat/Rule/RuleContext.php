@@ -10,7 +10,6 @@ use App\Domain\Game\Game;
 use App\Domain\Rule\DogAcrossToDogRule;
 use App\Domain\Rule\DogPlacedInAPlaceWithEvidence;
 use App\Domain\Rule\Rule;
-use App\Domain\Rule\RuleCompliance;
 use App\Domain\Rule\XDogsWherePlayingOutside;
 use Behat\Behat\Context\Context;
 
@@ -18,7 +17,7 @@ final class RuleContext implements Context
 {
     private Rule $rule;
     private Game $game;
-    private RuleCompliance $ruleResult;
+    private bool $ruleResult;
 
     private array $acrossPositions = [
         [1, 4],
@@ -144,7 +143,7 @@ final class RuleContext implements Context
      */
     public function theRuleHasBeenViolated()
     {
-        assert($this->ruleResult === RuleCompliance::ViolatesTheRule, 'The rule has not been violated');
+        assert($this->ruleResult === false, 'The rule has not been violated');
     }
 
     /**
@@ -152,7 +151,7 @@ final class RuleContext implements Context
      */
     public function theRuleHasBeenMeet()
     {
-        assert($this->ruleResult === RuleCompliance::MeetsTheRule, 'The rule has not been meet');
+        assert($this->ruleResult === true, 'The rule has not been meet');
     }
 
     /**
@@ -160,7 +159,7 @@ final class RuleContext implements Context
      */
     public function theRuleHasBeenNotMeetNorViolateTheRule()
     {
-        assert($this->ruleResult === RuleCompliance::NotMeetNorViolateTheRule, 'The rule has not been nor meet nor violate');
+        assert($this->ruleResult === false, 'The rule has not been meet');
     }
 
     /**

@@ -18,11 +18,11 @@ final class XDogsWherePlayingOutside implements Rule
         return $this->ruleText;
     }
 
-    public function meets(Game $game): RuleCompliance
+    public function meets(Game $game): bool
     {
         if ($game->unPlacedDogs()->count() === $this->numberOfDogs) {
-            return RuleCompliance::MeetsTheRule;
+            return true;
         }
-        return RuleCompliance::ViolatesTheRule;
+        return false;
     }
 }

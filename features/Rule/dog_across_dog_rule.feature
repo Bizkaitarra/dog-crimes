@@ -5,14 +5,14 @@ Feature:
     Given a new game with crime "Cake" is created
     And the rule is that "Cider" is across to "Ace"
     When the rule is checked
-    Then the result is that the rule has been meet not meet nor violated
+    Then the result is that the rule has been violated
 
   Scenario: Cider and Ace should be across and only ace is placed
     Given a new game with crime "Cake" is created
     And the rule is that "Cider" is across to "Ace"
     And "Ace" is placed in "1"
     When the rule is checked
-    Then the result is that the rule has been meet not meet nor violated
+    Then the result is that the rule has been violated
 
   Scenario: Cider and Ace should be across and only ace and cider are placed, and they are across
     Given a new game with crime "Cake" is created
@@ -35,7 +35,7 @@ Feature:
     And "Ace" is placed in "1"
     And "Pepper" is placed in "6"
     When the rule is checked
-    Then the result is that the rule has been meet not meet nor violated
+    Then the result is that the rule has been violated
 
   Scenario: Cider and Ace should be across and only ace and other dog is placed and they are across
     Given a new game with crime "Cake" is created
@@ -50,13 +50,13 @@ Feature:
     And "Cider" is placed in "1"
     And "Pepper" is placed in "3"
     When the rule is checked
-    Then the result is that the rule has been meet not meet nor violated
+    Then the result is that the rule has been violated
 
   Scenario: A dog with bandana (Daisy or Ace) and a dog with Bow (Suzette or Beans) should be across and no one is placed
     Given a new game with crime "Cake" is created
     And the rule is that a dog with "bandana" is across a dog with "bow"
     When the rule is checked
-    Then the result is that the rule has been meet not meet nor violated
+    Then the result is that the rule has been violated
 
   Scenario: A dog with bandana (Daisy or Ace) and a dog with Bow (Suzette or Beans) should be across and only Daisy and Beans are placed not across
     Given a new game with crime "Cake" is created
@@ -64,7 +64,7 @@ Feature:
     And "Daisy" is placed in "1"
     And "Beans" is placed in "5"
     When the rule is checked
-    Then the result is that the rule has been meet not meet nor violated
+    Then the result is that the rule has been violated
 
   Scenario: A dog with bandana (Daisy or Ace) and a dog with Bow (Suzette or Beans) should be across and they are all placed and not across
     Given a new game with crime "Cake" is created

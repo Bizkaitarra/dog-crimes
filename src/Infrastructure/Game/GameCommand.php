@@ -9,7 +9,6 @@ use App\Domain\BoardPlace\BoardPlace;
 use App\Domain\Dog\Dog;
 use App\Domain\Dog\DogCollection;
 use App\Domain\Game\Game;
-use App\Domain\Rule\RuleCompliance;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -137,16 +136,10 @@ final class GameCommand extends Command
     {
         foreach ($game->rules() as $ruleText => $ruleMeets) {
             $output->writeln($ruleText);
-            switch ($ruleMeets) {
-                case RuleCompliance::MeetsTheRule:
-                    $output->writeln(sprintf('La regla "%s" se cumple', $ruleText));
-                    break;
-                case RuleCompliance::NotMeetNorViolateTheRule:
-                    $output->writeln(sprintf('La regla "%s" no se cumple ni se incumple', $ruleText));
-                    break;
-                case RuleCompliance::ViolatesTheRule:
-                    $output->writeln(sprintf('La regla "%s" se incumple', $ruleText));
-                    break;
+            if ($ruleMeets) {
+                $output->writeln(sprintf('La regla "%s" se cumple', $ruleText));
+            } else {
+                $output->writeln(sprintf('La regla "%s" se incumple', $ruleText));
             }
         }
 

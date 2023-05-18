@@ -2,7 +2,6 @@
 
 namespace App\Domain\Rule;
 
-use App\Domain\Dog\Dog;
 use App\Domain\Dog\DogDefinition;
 use App\Domain\Game\Game;
 
@@ -23,7 +22,7 @@ final class DogsWherePlayingOutside implements Rule
     /**
      * @throws IncorrectRuleException
      */
-    public function meets(Game $game): RuleCompliance
+    public function meets(Game $game): bool
     {
         foreach ($this->dogDefinitions as $dogDefinition) {
             $dogsThatMeetsDefinition = $dogDefinition->getDogsThatMeets($game->dogs);
@@ -34,16 +33,15 @@ final class DogsWherePlayingOutside implements Rule
 
             $notPlacedDogsThatMeetsDefinition = $dogsThatMeetsDefinition->unPlacedDogs();
             if ($notPlacedDogsThatMeetsDefinition->empty()) {
-                return RuleCompliance::ViolatesTheRule;
+                return false;
             }
         }
-        return RuleCompliance::MeetsTheRule;
+        return true;
     }
 
     public function __toString(): string
     {
         return $this->ruleText;
     }
-
 
 }

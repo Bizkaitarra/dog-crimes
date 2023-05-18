@@ -26,11 +26,6 @@ class DogLeftToDogRule extends TwoDogPlaced
         return $firstDog->getBoardPlace()->isInLeftOf($secondDog->getBoardPlace());
     }
 
-    protected function placedDog(Dog $dog): ?Dog
-    {
-        return $dog->getBoardPlace()->leftBoard()->getDog();
-    }
-
     protected function firstDogDefinition(): DogDefinition
     {
         return $this->firstDogDefinition;

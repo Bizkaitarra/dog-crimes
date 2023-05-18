@@ -4,7 +4,6 @@ namespace App\Domain\Game;
 
 use App\Domain\Dog\Dog;
 use App\Domain\Rule\Rule;
-use App\Domain\Rule\RuleCompliance;
 use App\Domain\Rule\RuleStatus;
 
 final class GameStatus
@@ -20,7 +19,7 @@ final class GameStatus
     {
     }
 
-    public function addRule(Rule $rule, RuleCompliance $ruleCompliance) {
+    public function addRule(Rule $rule, bool $ruleCompliance) {
         $this->rules[] = new RuleStatus($rule, $ruleCompliance);
     }
 

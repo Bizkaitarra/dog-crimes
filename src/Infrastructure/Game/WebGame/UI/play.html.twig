@@ -81,10 +81,6 @@
             color: #AA3333;
         }
 
-        .NotMeetNorViolateTheRule {
-            color: chocolate;
-        }
-
 
     </style>
 {% endblock %}
@@ -172,7 +168,11 @@
                     ul.innerHTML = '';
                     for (var rule in rules) {
                         let li = document.createElement('li');
-                        li.classList.add(rules[rule].compliance);
+                        if (rules[rule].compliance) {
+                            li.classList.add('MeetsTheRule');
+                        } else {
+                            li.classList.add('ViolatesTheRule');
+                        }
                         li.innerHTML = rules[rule].text;
                         ul.appendChild(li);
                     }

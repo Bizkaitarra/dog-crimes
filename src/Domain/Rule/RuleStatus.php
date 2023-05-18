@@ -6,7 +6,7 @@ final class RuleStatus
 {
     public function __construct(
         public readonly Rule $rule,
-        public readonly RuleCompliance $ruleCompliance
+        public readonly bool $ruleCompliance
     )
     {
     }

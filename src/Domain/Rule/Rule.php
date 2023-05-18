@@ -10,5 +10,5 @@ interface Rule
     /**
      * @throws IncorrectRuleException
      */
-    public function meets(Game $game): RuleCompliance;
+    public function meets(Game $game): bool;
 }

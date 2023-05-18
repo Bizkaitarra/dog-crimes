@@ -16,30 +16,16 @@ final class DogPlacedInAPlaceWithEvidence implements Rule
     {
     }
 
-    public function meets(Game $game): RuleCompliance
+    public function meets(Game $game): bool
     {
         $dogs = $this->dogDefinition->getDogsThatMeets($game->dogs);
         $placedDogs = $dogs->placedDogs();
-
         foreach ($placedDogs as $dog) {
             if ($dog->getBoardPlace()->hasEvidence($this->evidence)) {
-                return RuleCompliance::MeetsTheRule;
+                return true;
             }
         }
-        if (!$this->areThereEnoughtFreePlaces($game)) {
-            return RuleCompliance::ViolatesTheRule;
-        }
-        if ($placedDogs->empty()) {
-            return RuleCompliance::NotMeetNorViolateTheRule;
-        }
-        if ($placedDogs->hasLessDogsThan($dogs)) {
-            return RuleCompliance::NotMeetNorViolateTheRule;
-        }
-        return RuleCompliance::ViolatesTheRule;
-    }
-
-    private function areThereEnoughtFreePlaces(Game $game): bool {
-        return !$game->freeBoardPlacesWithEvidence($this->evidence)->empty();
+        return false;
     }
 
     public function __toString(): string
