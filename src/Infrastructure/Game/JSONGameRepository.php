@@ -10,6 +10,7 @@ use App\Domain\Game\NotExistingGameException;
 use App\Domain\Rule\DogAcrossToDogRule;
 use App\Domain\Rule\DogRightToDogRule;
 use App\Domain\Rule\Rule;
+use App\Domain\Rule\XDogsWherePlayingOutside;
 
 final class JSONGameRepository implements GameRepository
 {
@@ -76,6 +77,12 @@ final class JSONGameRepository implements GameRepository
                         $ruleToParse['text'],
                         $this->parseDogDefinition($ruleToParse['firstDogDefinition']),
                         $this->parseDogDefinition($ruleToParse['secondDogDefinition'])
+                    );
+                    break;
+                case 'XDogsWherePlayingOutside':
+                    $rules[] = new XDogsWherePlayingOutside(
+                        $ruleToParse['text'],
+                        $ruleToParse['numberOfDogs'],
                     );
                     break;
             }

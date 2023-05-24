@@ -69,6 +69,10 @@ final class DogCollection implements IteratorAggregate
     {
         $this->getDogByName($dog->getName())->place($boardPlace);
     }
+    public function unPlace(Dog $dog)
+    {
+        $this->getDogByName($dog->getName())->unPlace();
+    }
 
     public function hasLessDogsThan(DogCollection $otherDogCollection): bool {
         return $this->count() < $otherDogCollection->count();
@@ -86,4 +90,6 @@ final class DogCollection implements IteratorAggregate
     public function toArray() {
         return $this->dogs;
     }
+
+
 }

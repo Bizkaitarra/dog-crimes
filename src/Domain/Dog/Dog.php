@@ -12,7 +12,7 @@ class Dog
     const BEANS = 'Beans';
     const PEPPER = 'Pepper';
 
-    private ?BoardPlace $boardPlace;
+    private ?BoardPlace $boardPlace = null;
 
     public function __construct(
         private string $name,
@@ -158,6 +158,15 @@ class Dog
         $boardPlace->placeDog($this);
     }
 
+    public function unPlace(): void
+    {
+        if ($this->boardPlace === null) {
+            return;
+        }
+        $this->boardPlace->free();
+        $this->boardPlace = null;
+    }
+
     public function __toString(): string
     {
         return $this->name;
@@ -166,6 +175,8 @@ class Dog
     public function equals(Dog $otherDog) {
         return $otherDog->getName() === $this->getName();
     }
+
+
 
 
 }

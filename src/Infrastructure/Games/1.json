@@ -7,7 +7,7 @@
         "name": "Beans"
       },
       "evidence": {
-        "name": "Beans"
+        "name": "Sock"
       }
     },
     {
@@ -29,6 +29,11 @@
       "secondDogDefinition": {
         "name": "Ace"
       }
+    },
+    {
+      "text": "3 perros estaban jugando fuera",
+      "type": "XDogsWherePlayingOutside",
+      "numberOfDogs": 3
     }
   ],
   "crime": "Pillow"

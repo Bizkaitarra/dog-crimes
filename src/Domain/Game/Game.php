@@ -32,6 +32,17 @@ class Game
         $this->dogs->place($dog,$this->board->getBoardPlaceByNumber($boardPlaceNumber));
     }
 
+    public function unPlace(Dog $dog): void
+    {
+        $this->dogs->unPlace($dog);
+    }
+
+    public function freeBoard(): void {
+        foreach ($this->dogs as $dog) {
+            $dog->unPlace();
+        }
+    }
+
     public function getDogByName(string $dogName):Dog {
         return $this->dogs->getDogByName($dogName);
     }

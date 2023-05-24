@@ -106,7 +106,12 @@ final class Board implements IteratorAggregate
 
     public function crimeBoardPlace(): BoardPlace
     {
-        return array_filter($this->boardPlaces, fn($boardPlace) => $boardPlace->isCurrentCrimePlace())[0];
+        foreach ($this->boardPlaces as $boardPlace) {
+            if ($boardPlace->isCurrentCrimePlace()) {
+                return $boardPlace;
+            }
+        }
+        throw new \LogicException('No crime board place found');
     }
 
     public function getIterator(): Traversable

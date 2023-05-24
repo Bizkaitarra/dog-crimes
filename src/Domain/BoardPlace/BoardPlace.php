@@ -97,10 +97,17 @@ class BoardPlace
         }
     }
 
+    public function free(): void
+    {
+        $this->dog = null;
+    }
+
     public function __toString(): string
     {
         return $this->placeNumber;
     }
+
+
 
 
 }
