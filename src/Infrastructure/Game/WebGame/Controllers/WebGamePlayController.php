@@ -32,7 +32,7 @@ final class WebGamePlayController extends AbstractController
 
         $serializedRules = [];
         foreach ($gameStatus->rules() as $rule) {
-            $serializedRules[(string)$rule->rule] = $rule->ruleCompliance->name;
+            $serializedRules[(string)$rule->rule] = $rule->ruleCompliance;
         }
 
         return $this->render('play.html.twig', [

@@ -36,7 +36,7 @@ final class GameCheckController extends AbstractController
         foreach ($gameStatus->rules() as $rule) {
             $serializedRules[] = [
                 'text' => (string)$rule->rule,
-                'compliance' => $rule->ruleCompliance->name
+                'compliance' => $rule->ruleCompliance
             ];
 
         }
