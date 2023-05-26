@@ -2,12 +2,17 @@
 
 namespace App\Infrastructure\Game;
 
+use App\Domain\Crime;
 use App\Domain\Dog\DogDefinition;
+use App\Domain\Evidence;
 use App\Domain\Game\Game;
 use App\Domain\Game\GameId;
 use App\Domain\Game\GameRepository;
 use App\Domain\Game\NotExistingGameException;
 use App\Domain\Rule\DogAcrossToDogRule;
+use App\Domain\Rule\DogNextToDogRule;
+use App\Domain\Rule\DogPlacedInAPlaceWithCrime;
+use App\Domain\Rule\DogPlacedInAPlaceWithEvidence;
 use App\Domain\Rule\DogRightToDogRule;
 use App\Domain\Rule\Rule;
 use App\Domain\Rule\XDogsWherePlayingOutside;
@@ -79,10 +84,31 @@ final class JSONGameRepository implements GameRepository
                         $this->parseDogDefinition($ruleToParse['secondDogDefinition'])
                     );
                     break;
+                case 'DogNextToDogRule':
+                    $rules[] = new DogNextToDogRule(
+                        $ruleToParse['text'],
+                        $this->parseDogDefinition($ruleToParse['firstDogDefinition']),
+                        $this->parseDogDefinition($ruleToParse['secondDogDefinition'])
+                    );
+                    break;
                 case 'XDogsWherePlayingOutside':
                     $rules[] = new XDogsWherePlayingOutside(
                         $ruleToParse['text'],
                         $ruleToParse['numberOfDogs'],
+                    );
+                    break;
+                case 'DogPlacedInAPlaceWithEvidence':
+                    $rules[] = new DogPlacedInAPlaceWithEvidence(
+                        $ruleToParse['text'],
+                        $this->parseDogDefinition($ruleToParse['firstDogDefinition']),
+                        $this->parseEvidence($ruleToParse['evidence']),
+                    );
+                    break;
+                case 'DogPlacedInAPlaceWithCrime':
+                    $rules[] = new DogPlacedInAPlaceWithCrime(
+                        $ruleToParse['text'],
+                        $this->parseDogDefinition($ruleToParse['firstDogDefinition']),
+                        $this->parseCrime($ruleToParse['crime']),
                     );
                     break;
             }
@@ -101,5 +127,15 @@ final class JSONGameRepository implements GameRepository
             $dogDefinition['hasCollar'] ?? null,
             $dogDefinition['hasBow'] ?? null
         );
+    }
+
+    private function parseEvidence(string $evidence): Evidence
+    {
+        return new Evidence($evidence);
+    }
+
+    private function parseCrime(string $crime): Crime
+    {
+        return new Crime($crime, false);
     }
 }

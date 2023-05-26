@@ -3,6 +3,7 @@
 namespace App\Domain\Rule;
 
 use App\Domain\Crime;
+use App\Domain\Dog\Dog;
 use App\Domain\Dog\DogDefinition;
 use App\Domain\Game\Game;
 
@@ -20,8 +21,9 @@ final class DogPlacedInAPlaceWithCrime implements Rule
     {
         $dogs = $this->dogDefinition->getDogsThatMeets($game->dogs);
         $placedDogs = $dogs->placedDogs();
+        /** @var Dog $dog */
         foreach ($placedDogs as $dog) {
-            if ($dog->getBoardPlace()->getCrime()->equals($this->crime)) {
+            if ($dog->getBoardPlace()->hasCrime($this->crime)) {
                 return true;
             }
         }

@@ -92,7 +92,7 @@ final class RuleContext implements Context
         return match (strtoupper($evidence)) {
             'TENNIS_BALL' => new Evidence(Evidence::TENNIS_BALL),
             'SOCK' => new Evidence(Evidence::SOCK),
-            'RAWHIDE' => new Evidence(Evidence::RAWHIDE),
+            'RAWHIDE' => new Evidence(Evidence::LEATHER_BONE),
             'STICK' => new Evidence(Evidence::STICK),
             'PAW_PRINT' => new Evidence(Evidence::PAW_PRINT),
             'ROPE_TOY' => new Evidence(Evidence::ROPE_TOY),

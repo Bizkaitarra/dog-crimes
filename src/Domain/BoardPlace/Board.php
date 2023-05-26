@@ -26,7 +26,7 @@ final class Board implements IteratorAggregate
     {
         $tennisBall = new Evidence(Evidence::TENNIS_BALL);
         $sock = new Evidence(Evidence::SOCK);
-        $rawhide = new Evidence(Evidence::RAWHIDE);
+        $rawhide = new Evidence(Evidence::LEATHER_BONE);
         $stick = new Evidence(Evidence::STICK);
         $pawPrint = new Evidence(Evidence::PAW_PRINT);
         $ropeToy = new Evidence(Evidence::ROPE_TOY);

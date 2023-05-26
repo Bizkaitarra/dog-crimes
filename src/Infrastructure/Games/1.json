@@ -6,9 +6,7 @@
       "firstDogDefinition": {
         "name": "Beans"
       },
-      "evidence": {
-        "name": "Sock"
-      }
+      "crime": "HOMEWORK"
     },
     {
       "text": "Ace está sentado enfrente de Beans",
@@ -31,10 +29,23 @@
       }
     },
     {
-      "text": "3 perros estaban jugando fuera",
-      "type": "XDogsWherePlayingOutside",
-      "numberOfDogs": 3
+      "text": "Cider estaba sentadado delante de un hueso de cuero",
+      "type": "DogPlacedInAPlaceWithEvidence",
+      "firstDogDefinition": {
+        "name": "Cider"
+      },
+      "evidence": "LEATHER_BONE"
+    },
+    {
+      "text": "Suzzete estaba sentada junto a Cider",
+      "type": "DogNextToDogRule",
+      "firstDogDefinition": {
+        "name": "Suzette"
+      },
+      "secondDogDefinition": {
+        "name": "Cider"
+      }
     }
   ],
-  "crime": "Pillow"
+  "crime": "PILLOW"
 }

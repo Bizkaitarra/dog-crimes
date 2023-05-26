@@ -60,6 +60,10 @@ class BoardPlace
         return $this->crime->isCurrentCrime;
     }
 
+    public function hasCrime(Crime $crime):bool {
+        return $this->crime->__equals($crime);
+    }
+
     public function isNextTo(BoardPlace $boardPlace): bool {
         return $this->leftBoard->placeNumber === $boardPlace->placeNumber ||
             $this->rightBoard->placeNumber === $boardPlace->placeNumber;
