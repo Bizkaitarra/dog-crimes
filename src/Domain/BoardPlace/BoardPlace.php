@@ -81,6 +81,19 @@ class BoardPlace
         return $this->leftBoard->placeNumber === $boardPlace->placeNumber;
     }
 
+    public function isInDistance(int $distance, BoardPlace $boardPlace): bool {
+        $rightBoard = $this->rightBoard;
+        for ($i=1; $i<$distance; $i++) {
+            $rightBoard = $rightBoard->rightBoard;
+        }
+        $leftBoard = $this->leftBoard;
+        for ($i=1; $i<$distance; $i++) {
+            $leftBoard = $leftBoard->leftBoard;
+        }
+        return $rightBoard->placeNumber === $boardPlace->placeNumber ||
+            $leftBoard->placeNumber === $boardPlace->placeNumber;
+    }
+
     public function getDog(): ?Dog
     {
         if (isset($this->dog)) {

@@ -1,0 +1,56 @@
+{
+  "rules": [
+    {
+      "text": "Daisy y Beans estaban jugando en el patio",
+      "type": "DogsWherePlayingOutside",
+      "dogDefinitions": [
+        {
+          "name": "Daisy"
+        },
+        {
+          "name": "Beans"
+        }
+      ]
+    },
+    {
+      "text": "Suzette estaba sentada delante de la tarta",
+      "type": "DogPlacedInAPlaceWithCrime",
+      "firstDogDefinition": {
+        "name": "Suzette"
+      },
+      "crime": "CAKE"
+    },
+    {
+      "text": "Pepper estaba sentada a la izquierda de Suzette",
+      "type": "DogLeftToDogRule",
+      "firstDogDefinition": {
+        "name": "Pepper"
+      },
+      "secondDogDefinition": {
+        "name": "Suzette"
+      }
+    },
+    {
+      "text": "Cider estaba sentada a 2 asientos de distancia de Suzette",
+      "type": "DogPlacedInAPlaceWithDistanceRule",
+      "distance": 2,
+      "firstDogDefinition": {
+        "name": "Cider"
+      },
+      "secondDogDefinition": {
+        "name": "Suzette"
+      }
+    },
+    {
+      "text": "Ace estaba sentado junto a Pepper",
+      "type": "DogNextToDogRule",
+      "firstDogDefinition": {
+        "name": "Ace"
+      },
+      "secondDogDefinition": {
+        "name": "Pepper"
+      }
+    }
+  ],
+  "crime": "PILLOW"
+}

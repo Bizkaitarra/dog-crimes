@@ -10,10 +10,13 @@ use App\Domain\Game\GameId;
 use App\Domain\Game\GameRepository;
 use App\Domain\Game\NotExistingGameException;
 use App\Domain\Rule\DogAcrossToDogRule;
+use App\Domain\Rule\DogLeftToDogRule;
 use App\Domain\Rule\DogNextToDogRule;
 use App\Domain\Rule\DogPlacedInAPlaceWithCrime;
+use App\Domain\Rule\DogPlacedInAPlaceWithDistanceRule;
 use App\Domain\Rule\DogPlacedInAPlaceWithEvidence;
 use App\Domain\Rule\DogRightToDogRule;
+use App\Domain\Rule\DogsWherePlayingOutside;
 use App\Domain\Rule\Rule;
 use App\Domain\Rule\XDogsWherePlayingOutside;
 
@@ -84,6 +87,13 @@ final class JSONGameRepository implements GameRepository
                         $this->parseDogDefinition($ruleToParse['secondDogDefinition'])
                     );
                     break;
+                case 'DogLeftToDogRule':
+                    $rules[] = new DogLeftToDogRule(
+                        $ruleToParse['text'],
+                        $this->parseDogDefinition($ruleToParse['firstDogDefinition']),
+                        $this->parseDogDefinition($ruleToParse['secondDogDefinition'])
+                    );
+                    break;
                 case 'DogNextToDogRule':
                     $rules[] = new DogNextToDogRule(
                         $ruleToParse['text'],
@@ -91,24 +101,43 @@ final class JSONGameRepository implements GameRepository
                         $this->parseDogDefinition($ruleToParse['secondDogDefinition'])
                     );
                     break;
+                case 'DogPlacedInAPlaceWithDistanceRule':
+                    $rules[] = new DogPlacedInAPlaceWithDistanceRule(
+                        $ruleToParse['text'],
+                        $ruleToParse['distance'],
+                        $this->parseDogDefinition($ruleToParse['firstDogDefinition']),
+                        $this->parseDogDefinition($ruleToParse['secondDogDefinition'])
+                    );
+                    break;
                 case 'XDogsWherePlayingOutside':
                     $rules[] = new XDogsWherePlayingOutside(
                         $ruleToParse['text'],
-                        $ruleToParse['numberOfDogs'],
+                        $ruleToParse['numberOfDogs']
                     );
                     break;
                 case 'DogPlacedInAPlaceWithEvidence':
                     $rules[] = new DogPlacedInAPlaceWithEvidence(
                         $ruleToParse['text'],
                         $this->parseDogDefinition($ruleToParse['firstDogDefinition']),
-                        $this->parseEvidence($ruleToParse['evidence']),
+                        $this->parseEvidence($ruleToParse['evidence'])
                     );
                     break;
                 case 'DogPlacedInAPlaceWithCrime':
                     $rules[] = new DogPlacedInAPlaceWithCrime(
                         $ruleToParse['text'],
                         $this->parseDogDefinition($ruleToParse['firstDogDefinition']),
-                        $this->parseCrime($ruleToParse['crime']),
+                        $this->parseCrime($ruleToParse['crime'])
+                    );
+                    break;
+                case 'DogsWherePlayingOutside':
+                    $dogDefinitions = [];
+                    $definitions = $ruleToParse['dogDefinitions'];
+                    foreach ($definitions as $definition) {
+                        $dogDefinitions[] = $this->parseDogDefinition($definition);
+                    }
+                    $rules[] = new DogsWherePlayingOutside(
+                        $ruleToParse['text'],
+                        $dogDefinitions
                     );
                     break;
             }
