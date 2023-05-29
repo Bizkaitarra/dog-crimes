@@ -10,9 +10,13 @@ final class BruteForceSolver
     /**
      * @throws GameCantBeSolvedException
      */
-    public function __invoke(Game $game)
+    public function __invoke(Game $game): Solution
     {
         $places = [1, 2, 3, 4, 5, 6];
+        $games = [];
+
+        $checkedGame = clone $game;
+
         foreach ($this->arrayWithUnplace($places) as $firstDogPlace) {
             $secondDogPlaces = array_diff($places, [$firstDogPlace]);
             foreach ($this->arrayWithUnplace($secondDogPlaces) as $secondDogPlace) {
@@ -24,35 +28,35 @@ final class BruteForceSolver
                         foreach ($this->arrayWithUnplace($fifthDogPlaces) as $fifthDogPlace) {
                             $sixthDogPlaces = array_diff($fifthDogPlaces, [$fifthDogPlace]);
                             foreach ($this->arrayWithUnplace($sixthDogPlaces) as $sixthDogPlace) {
-                                echo "\n\nProbando\n";
-                                echo sprintf("%s=%s\n", Dog::CIDER, $firstDogPlace);
-                                echo sprintf("%s=%s\n", Dog::ACE, $secondDogPlace);
-                                echo sprintf("%s=%s\n", Dog::DAISY, $thirdDogPlace);
-                                echo sprintf("%s=%s\n", Dog::BEANS, $fourthDogPlace);
-                                echo sprintf("%s=%s\n", Dog::PEPPER, $fifthDogPlace);
-                                echo sprintf("%s=%s\n", Dog::SUZETTE, $sixthDogPlace);
+                                //echo "\n\nProbando\n";
+                                //echo sprintf("%s=%s\n", Dog::CIDER, $firstDogPlace);
+                                //echo sprintf("%s=%s\n", Dog::ACE, $secondDogPlace);
+                                //echo sprintf("%s=%s\n", Dog::DAISY, $thirdDogPlace);
+                                //echo sprintf("%s=%s\n", Dog::BEANS, $fourthDogPlace);
+                                //echo sprintf("%s=%s\n", Dog::PEPPER, $fifthDogPlace);
+                                //echo sprintf("%s=%s\n", Dog::SUZETTE, $sixthDogPlace);
 
-                                $game->freeBoard();
+                                $checkedGame->freeBoard();
                                 if ($firstDogPlace !== null) {
-                                    $game->place($game->getDogByName(Dog::CIDER), $firstDogPlace);
+                                    $checkedGame->place($game->getDogByName(Dog::CIDER), $firstDogPlace);
                                 }
                                 if ($secondDogPlace !== null) {
-                                    $game->place($game->getDogByName(Dog::ACE), $secondDogPlace);
+                                    $checkedGame->place($game->getDogByName(Dog::ACE), $secondDogPlace);
                                 }
                                 if ($thirdDogPlace !== null) {
-                                    $game->place($game->getDogByName(Dog::DAISY), $thirdDogPlace);
+                                    $checkedGame->place($game->getDogByName(Dog::DAISY), $thirdDogPlace);
                                 }
                                 if ($fourthDogPlace !== null) {
-                                    $game->place($game->getDogByName(Dog::BEANS), $fourthDogPlace);
+                                    $checkedGame->place($game->getDogByName(Dog::BEANS), $fourthDogPlace);
                                 }
                                 if ($fifthDogPlace !== null) {
-                                    $game->place($game->getDogByName(Dog::PEPPER), $fifthDogPlace);
+                                    $checkedGame->place($game->getDogByName(Dog::PEPPER), $fifthDogPlace);
                                 }
                                 if ($sixthDogPlace !== null) {
-                                    $game->place($game->getDogByName(Dog::SUZETTE), $sixthDogPlace);
+                                    $checkedGame->place($game->getDogByName(Dog::SUZETTE), $sixthDogPlace);
                                 }
-                                if ($game->isSolved()) {
-                                    return $game;
+                                if ($checkedGame->isSolved()) {
+                                    $games[] = clone $checkedGame;
                                 }
                             }
                         }
@@ -60,7 +64,10 @@ final class BruteForceSolver
                 }
             }
         }
-        throw new GameCantBeSolvedException();
+        if (count($games) === 0) {
+            throw new GameCantBeSolvedException();
+        }
+        return new Solution($games);
     }
 
     private

@@ -10,6 +10,7 @@ use App\Domain\Dog\Dog;
 use App\Domain\Dog\DogCollection;
 use App\Domain\Game\Game;
 use App\Domain\Game\GameId;
+use App\Domain\GameGenerator\RandomGameGenerator;
 use App\Domain\Solver\BruteForceSolver;
 use App\Domain\Solver\GameCantBeSolvedException;
 use Symfony\Component\Console\Command\Command;
@@ -17,39 +18,24 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
-final class GameSolverCommand extends Command
+final class GameGeneratorCommand extends Command
 {
-    public function __construct(
-        private readonly FindGame $gameFinder
-    )
-    {
-        parent::__construct();
-    }
-
     protected function configure(): void
     {
         $this
             // the command help shown when running the command with the "--help" option
-            ->setHelp('This command allows to play to dog crimes')
-            ->setName('dog-crimes:solve')
+            ->setHelp('This command generates a random game dog crimes')
+            ->setName('dog-crimes:generate')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $gameSolver = new BruteForceSolver();
-        $game = $this->gameFinder->__invoke(new GameId(1));
+        $gameGenerator = new RandomGameGenerator($gameSolver);
+        $game = $gameGenerator->__invoke();
         $this->explainRules($game, $output);
-
-        try {
-            $games = $gameSolver->__invoke($game);
-            $game = $games->games[0];
-            $output->writeln('Se ha resuelto el juego');
-            $this->explainWhereAreDogsPlaced($game, $output);
-        } catch (GameCantBeSolvedException) {
-            $output->writeln('El juego no se puede resolver');
-            return Command::SUCCESS;
-        }
+        $this->explainWhereAreDogsPlaced($game, $output);
         return Command::SUCCESS;
     }
 
