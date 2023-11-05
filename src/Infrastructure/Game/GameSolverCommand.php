@@ -38,7 +38,7 @@ final class GameSolverCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $gameSolver = new BruteForceSolver();
-        $game = $this->gameFinder->__invoke(new GameId(1));
+        $game = $this->gameFinder->__invoke(new GameId('1'));
         $this->explainRules($game, $output);
 
         try {

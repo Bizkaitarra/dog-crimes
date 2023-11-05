@@ -8,6 +8,9 @@ use ArrayIterator;
 use IteratorAggregate;
 use Traversable;
 
+/**
+ * @template-implements IteratorAggregate<BoardPlace>
+ */
 final class Board implements IteratorAggregate
 {
     /**

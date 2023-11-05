@@ -7,6 +7,9 @@ use ArrayIterator;
 use IteratorAggregate;
 use Traversable;
 
+/**
+ * @template-implements IteratorAggregate<Dog>
+ */
 final class DogCollection implements IteratorAggregate
 {
     /**
