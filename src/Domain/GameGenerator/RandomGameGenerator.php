@@ -32,6 +32,7 @@ final class RandomGameGenerator
         $crime = Crime::CAKE;
         $gameWithOnlyOneSolution = false;
         $lastNumberOfSolutions = 9999999999999;
+        $game = null;
         while (!$gameWithOnlyOneSolution) {
             $rule = $this->randomRule();
             $game = new Game(array_merge($rules, [$rule]), $crime);
@@ -55,6 +56,10 @@ final class RandomGameGenerator
             } catch (GameCantBeSolvedException $exception) {
                 echo $exception->getMessage() . PHP_EOL;
             }
+        }
+
+        if ($game === null) {
+            throw new \LogicException('This should not happen');
         }
         echo 'Se ha conseguido crear un juego! ' . PHP_EOL;
         return $game;
@@ -83,8 +88,12 @@ final class RandomGameGenerator
 
     private function randomDogAcrossToDogRule(string $className): TwoDogPlaced
     {
+        if (!is_subclass_of($className, TwoDogPlaced::class)) {
+            throw new \InvalidArgumentException("$className must be a subclass of TwoDogPlaced");
+        }
         $firstDogDefinition = $this->randomDogDefinition();
         $secondDogDefinition = $this->randomDogDefinition();
+
         return new $className(
             'El perro %s está enfrente del perro %s',
             $firstDogDefinition,
