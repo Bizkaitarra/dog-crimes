@@ -24,7 +24,8 @@
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "6.1.*",
         "symfony/css-selector": "6.1.*",
-        "symfony/phpunit-bridge": "^6.2"
+        "symfony/phpunit-bridge": "^6.2",
+        "vimeo/psalm": "^5.13"
     },
     "config": {
         "allow-plugins": {

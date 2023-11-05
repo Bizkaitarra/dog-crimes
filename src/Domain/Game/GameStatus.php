@@ -19,7 +19,7 @@ final class GameStatus
     {
     }
 
-    public function addRule(Rule $rule, bool $ruleCompliance) {
+    public function addRule(Rule $rule, bool $ruleCompliance): void {
         $this->rules[] = new RuleStatus($rule, $ruleCompliance);
     }
 

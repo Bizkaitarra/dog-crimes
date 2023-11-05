@@ -30,7 +30,6 @@ final class WebGamePlayController extends AbstractController
 
         $gameStatus = $game->status();
 
-        $serializedRules = [];
         foreach ($gameStatus->rules() as $rule) {
             $serializedRules[(string)$rule->rule] = $rule->ruleCompliance;
         }

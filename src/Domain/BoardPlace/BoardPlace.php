@@ -37,21 +37,6 @@ class BoardPlace
         $this->frontBoard = $boardPlace;
     }
 
-    public function leftBoard(): BoardPlace
-    {
-        return $this->leftBoard;
-    }
-
-    public function rightBoard(): BoardPlace
-    {
-        return $this->rightBoard;
-    }
-
-    public function frontBoard(): BoardPlace
-    {
-        return $this->frontBoard;
-    }
-
     public function hasEvidence(Evidence $evidence): bool {
         return isset($this->evidences[$evidence->name]);
     }
@@ -74,11 +59,11 @@ class BoardPlace
     }
 
     public function isInRightOf(BoardPlace $boardPlace): bool {
-        return $this->rightBoard->placeNumber === $boardPlace->placeNumber;
+        return $this->leftBoard->placeNumber === $boardPlace->placeNumber;
     }
 
     public function isInLeftOf(BoardPlace $boardPlace): bool {
-        return $this->leftBoard->placeNumber === $boardPlace->placeNumber;
+        return $this->rightBoard->placeNumber === $boardPlace->placeNumber;
     }
 
     public function isInDistance(int $distance, BoardPlace $boardPlace): bool {
@@ -107,7 +92,7 @@ class BoardPlace
         return $this->getDog() instanceof Dog;
     }
 
-    public function placeDog(Dog $dog) {
+    public function placeDog(Dog $dog): void {
         $this->dog = $dog;
         if ($this !== $dog->getBoardPlace()) {
             $dog->place($this);

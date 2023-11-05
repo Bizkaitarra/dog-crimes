@@ -35,7 +35,7 @@ final class GameGeneratorCommand extends Command
         $gameGenerator = new RandomGameGenerator($gameSolver);
         $game = $gameGenerator->__invoke();
         $this->explainRules($game, $output);
-        $this->explainWhereAreDogsPlaced($game, $output);
+
         return Command::SUCCESS;
     }
 

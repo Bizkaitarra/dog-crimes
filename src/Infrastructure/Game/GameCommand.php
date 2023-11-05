@@ -18,12 +18,11 @@ final class GameCommand extends Command
 {
     public function __construct(
         private readonly FindGamesIds $findGamesIds,
-        private readonly FindGame $gameFinder
+        private readonly FindGame     $gameFinder
     )
     {
         parent::__construct();
     }
-
 
 
     protected function configure(): void
@@ -31,8 +30,7 @@ final class GameCommand extends Command
         $this
             // the command help shown when running the command with the "--help" option
             ->setHelp('This command allows to play to dog crimes')
-            ->setName('dog-crimes:play')
-        ;
+            ->setName('dog-crimes:play');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -46,15 +44,22 @@ final class GameCommand extends Command
         $this->explainWhereAreDogsPlaced($game, $output);
 
         while ($this->askForConfirmation($input, $output, '¿Quieres posicionar algún perro?')) {
-            $selectedDog = $this->askForNewDogToBePlaced($input, $output,$game, $game->dogs);
-            $selectedPlace = $this->askForNewPlace($input, $output,$game->board);
+            $selectedDog = $this->askForNewDogToBePlaced($input, $output, $game, $game->dogs);
+            $selectedPlace = $this->askForNewPlace($input, $output, $game->board);
             $game->place($selectedDog, $selectedPlace->placeNumber);
             $this->explainWhereAreDogsPlaced($game, $output);
             $this->explainRules($game, $output);
             if ($game->isSolved()) {
                 $output->writeln('El juego está solucionado, todas las reglas se cumplen y hay un perro posicionado en el lugar del crimen');
                 $guilty = $game->dogThatMadeTheCrime();
-                $output->writeln(sprintf('%s está delante de %s. ¿Qué has hecho %s',$guilty, $game->crime(), $guilty ));
+                $output->writeln(
+                    sprintf(
+                        '%s está delante de %s. ¿Qué has hecho %s',
+                        $guilty->getName(),
+                        $game->crime(),
+                        $guilty->getName()
+                    )
+                );
                 return Command::SUCCESS;
             }
         }
@@ -81,10 +86,11 @@ final class GameCommand extends Command
     }
 
     private function askForConfirmation(
-        InputInterface $input,
+        InputInterface  $input,
         OutputInterface $output,
-        string $message
-    ): bool {
+        string          $message
+    ): bool
+    {
         $helper = $this->getHelper('question');
 
         $question = new ChoiceQuestion(
@@ -95,11 +101,12 @@ final class GameCommand extends Command
     }
 
     private function askForNewDogToBePlaced(
-        InputInterface $input,
+        InputInterface  $input,
         OutputInterface $output,
-        Game $game,
-        DogCollection $dogs
-    ): Dog {
+        Game            $game,
+        DogCollection   $dogs
+    ): Dog
+    {
         $helper = $this->getHelper('question');
         $question = new ChoiceQuestion(
             'Indica un perro',
@@ -108,7 +115,7 @@ final class GameCommand extends Command
         $question->setErrorMessage('%s no es un perro válido.');
 
         $dog = $helper->ask($input, $output, $question);
-        $output->writeln('Has seleccionado a '.$dog);
+        $output->writeln('Has seleccionado a ' . $dog);
         if (!$dog instanceof Dog) {
             $dog = $game->getDogByName($dog);
         }
@@ -116,10 +123,11 @@ final class GameCommand extends Command
     }
 
     private function askForNewPlace(
-        InputInterface $input,
+        InputInterface  $input,
         OutputInterface $output,
-        Board $board
-    ): BoardPlace {
+        Board           $board
+    ): BoardPlace
+    {
         $helper = $this->getHelper('question');
         $question = new ChoiceQuestion(
             'Indica un lugar donde posicionar al perro',
@@ -128,7 +136,7 @@ final class GameCommand extends Command
         $question->setErrorMessage('%s no es un lugar válido.');
 
         $boardPlace = $helper->ask($input, $output, $question);
-        $output->writeln('Has seleccionado a '.$boardPlace);
+        $output->writeln('Has seleccionado a ' . $boardPlace);
         return $boardPlace;
     }
 

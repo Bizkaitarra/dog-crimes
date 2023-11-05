@@ -79,24 +79,9 @@ final class Board implements IteratorAggregate
         ]);
     }
 
-    public function addBoardPlace(BoardPlace $boardPlace)
+    public function addBoardPlace(BoardPlace $boardPlace): void
     {
         $this->boardPlaces[$boardPlace->placeNumber] = $boardPlace;
-    }
-
-    public function boardPlacesWithDogs(): Board
-    {
-        return new Board(array_filter($this->boardPlaces, fn($boardPlace) => $boardPlace->hasDog()));
-    }
-
-    public function freeBoardPlaces(): Board
-    {
-        return new Board(array_filter($this->boardPlaces, fn($boardPlace) => !$boardPlace->hasDog()));
-    }
-
-    public function empty(): bool
-    {
-        return count($this->boardPlaces) == 0;
     }
 
     public function getBoardPlaceByNumber(int $placeNumber): BoardPlace

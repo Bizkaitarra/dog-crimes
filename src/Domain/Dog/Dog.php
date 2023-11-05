@@ -172,10 +172,6 @@ class Dog
         return $this->name;
     }
 
-    public function equals(Dog $otherDog) {
-        return $otherDog->getName() === $this->getName();
-    }
-
 
 
 

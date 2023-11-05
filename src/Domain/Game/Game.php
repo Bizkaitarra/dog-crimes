@@ -100,8 +100,4 @@ class Game
     public function crime(): string {
         return $this->crime;
     }
-
-    public function freeBoardPlacesWithEvidence(Evidence $evidence): Board {
-        return $this->board->freeBoardPlacesWithEvidence($evidence);
-    }
 }

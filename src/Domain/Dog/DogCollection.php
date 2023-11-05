@@ -35,7 +35,7 @@ final class DogCollection implements IteratorAggregate
         );
     }
 
-    public function addDog(Dog $dog)
+    public function addDog(Dog $dog): void
     {
         $this->dogs[$dog->getName()] = $dog;
     }
@@ -55,11 +55,6 @@ final class DogCollection implements IteratorAggregate
         return count($this->dogs) == 0;
     }
 
-    public function has(Dog $dog): bool
-    {
-        return isset($this->dogs[$dog->getName()]);
-    }
-
     public function getDogByName(string $dogName): Dog
     {
         return $this->dogs[$dogName];
@@ -69,13 +64,9 @@ final class DogCollection implements IteratorAggregate
     {
         $this->getDogByName($dog->getName())->place($boardPlace);
     }
-    public function unPlace(Dog $dog)
+    public function unPlace(Dog $dog): void
     {
         $this->getDogByName($dog->getName())->unPlace();
-    }
-
-    public function hasLessDogsThan(DogCollection $otherDogCollection): bool {
-        return $this->count() < $otherDogCollection->count();
     }
 
     public function count(): int {
@@ -87,7 +78,12 @@ final class DogCollection implements IteratorAggregate
         return new ArrayIterator($this->dogs);
     }
 
-    public function toArray() {
+    /**
+     * @return Dog[]
+     *
+     * @psalm-return array<Dog>
+     */
+    public function toArray(): array {
         return $this->dogs;
     }
 
