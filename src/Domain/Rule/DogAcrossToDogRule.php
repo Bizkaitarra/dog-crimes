@@ -23,6 +23,9 @@ class DogAcrossToDogRule extends TwoDogPlaced
 
     protected function areDogsCorrectlyPlaced(Dog $firstDog, Dog $secondDog): bool
     {
+        if (!$firstDog->isPlaced() || !$secondDog->isPlaced()) {
+            return true;
+        }
         return $firstDog->getBoardPlace()->isInFrontOf($secondDog->getBoardPlace());
     }
 
